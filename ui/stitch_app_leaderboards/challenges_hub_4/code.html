@@ -1,0 +1,214 @@
+<html lang="en"><head><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-bg-light text-text-main font-body antialiased selection:bg-rank-gold selection:text-black pb-28">```html
+
+
+
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Leaderboard Light Mode (5-item Nav)</title>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#19f061",
+                        "rank-gold": "#E8DE2A",
+                        "surface-light": "#ffffff",
+                        "bg-light": "#f8f9fa",
+                        "text-main": "#1a1a1a",
+                        "text-muted": "#888888",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    boxShadow: {
+                        "card": "0 2px 12px -2px rgba(0, 0, 0, 0.05)",
+                        "nav": "0 -4px 20px rgba(0,0,0,0.03)",
+                    }
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+
+
+<header class="sticky top-0 z-40 bg-bg-light/95 backdrop-blur-md px-6 pt-6 pb-2 border-b border-transparent transition-all duration-200">
+<div class="flex justify-between items-center mb-6">
+<h1 class="font-display text-2xl font-bold tracking-tight text-black">Leaderboard</h1>
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-black/5 transition-colors text-text-main">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+<div class="flex p-1.5 bg-white rounded-full border border-gray-100 shadow-sm mx-auto max-w-sm">
+<button class="flex-1 py-2.5 rounded-full bg-text-main text-white shadow-sm font-medium text-sm transition-all tracking-wide">Friends</button>
+<button class="flex-1 py-2.5 rounded-full text-text-muted hover:text-text-main font-medium text-sm transition-all tracking-wide hover:bg-gray-50">Global</button>
+</div>
+</header>
+<section class="px-6 pt-8 pb-10">
+<div class="flex items-end justify-center gap-2 text-center relative">
+<div class="flex flex-col items-center gap-3 w-[30%] z-10">
+<div class="relative group cursor-pointer">
+<div class="w-16 h-16 rounded-full p-[2px] ring-1 ring-[#E8DE2A] shadow-card bg-white transition-transform group-hover:scale-105">
+<img alt="Rank 2" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgTEcj8aieInkeCcl9mbdcS0iKD3RzMHn7HH1ZS0-YagKewu_Mg-X9wfSGijay4Vn7U7NLb9HzokgqJsqlS0W2E2Z9pA-JIW-wS4tAHJmsgOSXrCsUy3zv_i7Dj_ePuTNYW71Rg2wOVjMgRGC1v33AzXrI34hj5cth-CIv25dJnVOqQE48tXp2iG8jiizROW6ch8YRGjoq1ewmC2N8tnyg3ipdDEkHgEnAm9GpMZdb53r4I83Wx03HWQDoOUpOqMwNhBh1skPwFZk"/>
+</div>
+<div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-white ring-1 ring-gray-100 w-6 h-6 rounded-full shadow-sm flex items-center justify-center z-20">
+<span class="text-xs font-bold text-gray-800 font-display">2</span>
+</div>
+</div>
+<div class="mt-1">
+<p class="font-display font-semibold text-sm truncate w-full text-gray-900">Sarah</p>
+<p class="text-[11px] text-rank-gold font-bold tracking-wide">2,450</p>
+</div>
+</div>
+<div class="flex flex-col items-center gap-3 w-[35%] -mt-8 z-20">
+<div class="relative group cursor-pointer">
+<span class="absolute -top-7 left-1/2 -translate-x-1/2 text-[#E8DE2A]">
+<span class="material-symbols-outlined fill-1 text-[28px]">crown</span>
+</span>
+<div class="w-24 h-24 rounded-full p-[3px] ring-2 ring-[#E8DE2A] shadow-xl shadow-[#E8DE2A]/10 bg-white transition-transform group-hover:scale-105">
+<img alt="Rank 1" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJ60xwsrPssiuBxKTi5opTgWNArmrGjN3XCREXAIUciSwiFLSzFY2_Uka2tAZHzKt_zekFUPrli0pcZWxWD2QAWhJQZWUeQt_zPhu8xSN7Nn6rC2ehcsSS8cKSli5_ylyUGDHQAwR1i4TMjMB0sUQXNThjndE3KwTfXg-mdDzqmuoDLiVcdSdipThROJ87bvd7RmmTFtJ6cLNEV7yUOM13rkF6FTh_-exuxnoGnXG31vFIMmQAiFWl70Lanms9fxb0Ba8WLmVnNWI"/>
+</div>
+<div class="absolute -bottom-3.5 left-1/2 -translate-x-1/2 bg-[#E8DE2A] w-7 h-7 rounded-full shadow-md flex items-center justify-center ring-2 ring-white z-20">
+<span class="text-sm font-bold text-black font-display">1</span>
+</div>
+</div>
+<div class="mt-2">
+<p class="font-display font-bold text-lg truncate w-full text-black">Alex</p>
+<p class="text-xs text-rank-gold font-bold tracking-wide">3,120</p>
+</div>
+</div>
+<div class="flex flex-col items-center gap-3 w-[30%] z-10">
+<div class="relative group cursor-pointer">
+<div class="w-16 h-16 rounded-full p-[2px] ring-1 ring-[#E8DE2A] shadow-card bg-white transition-transform group-hover:scale-105">
+<img alt="Rank 3" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpoj4gAOudF1aCtLKIgaUKTkdI5Cq7sO7UmEdkG1XBIDQRfb7CoxKUDWSe9Rr4wftj7As-hAPvY4x4yy4PmZmw6KmndfP1vAD1RDPZnM95T87amHq8PeoCqNAtX9LtSuoK33CAOuAYRSzzYMaTkzWSeoVc8uZrX3-CmEwm2mA6BrPS8qejGe7h3cv-ywwYzhlojQUqXcC_X5rGGN1ckhlYGQDBMai-emy2L3tHUVXCjmZ5inp09FrRAv7w5S6NaqUWPn2TQHr_i4s"/>
+</div>
+<div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-white ring-1 ring-gray-100 w-6 h-6 rounded-full shadow-sm flex items-center justify-center z-20">
+<span class="text-xs font-bold text-gray-800 font-display">3</span>
+</div>
+</div>
+<div class="mt-1">
+<p class="font-display font-semibold text-sm truncate w-full text-gray-900">You</p>
+<p class="text-[11px] text-rank-gold font-bold tracking-wide">2,100</p>
+</div>
+</div>
+</div>
+</section>
+<main class="bg-white rounded-t-[2.5rem] min-h-[500px] shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.03)] px-6 pt-8 pb-12 flex flex-col gap-1 border-t border-gray-50 relative z-20">
+<div class="flex items-center justify-between mb-4 px-2">
+<h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Others</h3>
+<span class="text-[10px] font-medium text-gray-400 bg-gray-100 px-2 py-1 rounded-full">Updated 1m ago</span>
+</div>
+<div class="flex items-center p-3.5 rounded-2xl hover:bg-gray-50 active:bg-gray-100 transition-colors gap-4 cursor-pointer group border border-transparent hover:border-gray-100">
+<span class="font-display font-bold text-gray-400 w-6 text-center text-sm">4</span>
+<div class="relative">
+<img alt="User" class="w-11 h-11 rounded-full object-cover ring-1 ring-[#E8DE2A] p-0.5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZRdr_h_PTlDpsclkdILqU8UPCBVL3ZbqtfpVev8bXjj21oVjGEa5q8oxXqrGQnsWPoiZnkEQfkyyjy9k51vla9bCtu9plnrYCA6ytC-bWvic9TDwNMOFnZHMRhmhcBtRDmgs8lrsRu-0pySN2_uCLXx8eL4VHdbeoe-fifHwAVG2W0K4lhOwmGDd3_ybPI53YPGRKqFdsGIswTR7asntuFp1NNhJ5lUwHTReJkGXT-M4JsqybNZ76joB2hbg84VBzEkbVMbCImq0"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-display font-semibold text-text-main text-sm truncate group-hover:text-black transition-colors">Jordan Lee</p>
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+<p class="text-xs text-gray-400 truncate">Online</p>
+</div>
+</div>
+<div class="text-right">
+<span class="font-display font-bold text-text-main block text-sm">1,890</span>
+<span class="text-[10px] text-green-600 font-semibold flex items-center justify-end bg-green-50 px-1.5 py-0.5 rounded-md mt-1 w-fit ml-auto">
+<span class="material-symbols-outlined text-[12px] -ml-0.5">arrow_drop_up</span> 12
+                </span>
+</div>
+</div>
+<div class="flex items-center p-3.5 rounded-2xl hover:bg-gray-50 active:bg-gray-100 transition-colors gap-4 cursor-pointer group border border-transparent hover:border-gray-100">
+<span class="font-display font-bold text-gray-400 w-6 text-center text-sm">5</span>
+<div class="relative">
+<img alt="User" class="w-11 h-11 rounded-full object-cover ring-1 ring-[#E8DE2A] p-0.5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtRcfTxEd3PrmYgmXXWEkH-TlJAk9CejD8EOInW3sABQwOp6YRwAdakz8s13Kb0oRuVpiJWvx0liXYV8HfImhog-b5CPAgsz6VXlYJX3c1u4heHtw6L74nXaO2ooysG05M5oToscIq-sSzU-WbSLHuepoioDxsuRqDjm0fzffV8ntBLvHKBxsJIBEGPuo4__m-iSzkoXjV4Ad-GLvVOLPSsVn-sNQdcT1odvpb5U6i-RxNKK9WhYonrZU_FM1VUWJsxvRA0_-kacA"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-display font-semibold text-text-main text-sm truncate group-hover:text-black transition-colors">Casey Smith</p>
+<p class="text-xs text-gray-400 truncate">@casey_yoga</p>
+</div>
+<div class="text-right">
+<span class="font-display font-bold text-text-main block text-sm">1,650</span>
+<span class="text-[10px] text-gray-400 font-medium flex items-center justify-end mt-1">-</span>
+</div>
+</div>
+<div class="flex items-center p-3.5 rounded-2xl hover:bg-gray-50 active:bg-gray-100 transition-colors gap-4 cursor-pointer group border border-transparent hover:border-gray-100">
+<span class="font-display font-bold text-gray-400 w-6 text-center text-sm">6</span>
+<div class="relative">
+<div class="w-11 h-11 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 ring-1 ring-[#E8DE2A] p-0.5">
+<span class="font-bold text-xs font-display">MA</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-display font-semibold text-text-main text-sm truncate group-hover:text-black transition-colors">Mike A.</p>
+<p class="text-xs text-gray-400 truncate">@mike_builds</p>
+</div>
+<div class="text-right">
+<span class="font-display font-bold text-text-main block text-sm">1,420</span>
+<span class="text-[10px] text-red-500 font-semibold flex items-center justify-end bg-red-50 px-1.5 py-0.5 rounded-md mt-1 w-fit ml-auto">
+<span class="material-symbols-outlined text-[12px] -ml-0.5">arrow_drop_down</span> 5
+                </span>
+</div>
+</div>
+<div class="flex items-center p-3.5 rounded-2xl hover:bg-gray-50 active:bg-gray-100 transition-colors gap-4 cursor-pointer group border border-transparent hover:border-gray-100">
+<span class="font-display font-bold text-gray-400 w-6 text-center text-sm">7</span>
+<div class="relative">
+<img alt="User" class="w-11 h-11 rounded-full object-cover ring-1 ring-[#E8DE2A] p-0.5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD44yUhjNyw51AV0n_NVJqNixuaniXK3e_WoejZCfz2ypou3PtPtL1oyu0wKNKxmAY_Yw9MslDfuxzWl8VD_hmEGkHN7VpjjFAsrCkAN5f0MVtCmHGqnzYT8M-A_IDH62DNkZmxdEXwYucsL_6h91DfHIsibJ-SwmKsNknRoEIHDNklsIgfAfxJAlSRrBIf4U9wiVLjD2CiUZBk3fJD5hfds6su28aMYlkba20nNCXni8aVfEKW5al1wBtxfolypA3p83ZgeISMDFY"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-display font-semibold text-text-main text-sm truncate group-hover:text-black transition-colors">Emma Wilson</p>
+<p class="text-xs text-gray-400 truncate">@emma_w</p>
+</div>
+<div class="text-right">
+<span class="font-display font-bold text-text-main block text-sm">1,200</span>
+<span class="text-[10px] text-green-600 font-semibold flex items-center justify-end bg-green-50 px-1.5 py-0.5 rounded-md mt-1 w-fit ml-auto">
+<span class="material-symbols-outlined text-[12px] -ml-0.5">arrow_drop_up</span> 40
+                </span>
+</div>
+</div>
+</main>
+<nav class="fixed bottom-0 w-full bg-white/95 backdrop-blur-md border-t border-gray-100 px-2 pb-8 pt-3 flex justify-around items-center z-50 shadow-nav">
+<button class="flex flex-col items-center gap-1.5 w-16 text-gray-400 hover:text-text-main transition-colors group">
+<span class="material-symbols-outlined text-[24px] group-hover:-translate-y-0.5 transition-transform">home</span>
+<span class="text-[10px] font-medium tracking-tight">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1.5 w-16 text-black">
+<span class="material-symbols-outlined text-[24px] fill-1 text-rank-gold">leaderboard</span>
+<span class="text-[10px] font-bold tracking-tight">Leaderboard</span>
+</button>
+<button class="flex flex-col items-center gap-1.5 w-16 text-gray-400 hover:text-text-main transition-colors group">
+<span class="material-symbols-outlined text-[24px] group-hover:-translate-y-0.5 transition-transform">emoji_events</span>
+<span class="text-[10px] font-medium tracking-tight">Challenges</span>
+</button>
+<button class="flex flex-col items-center gap-1.5 w-16 text-gray-400 hover:text-text-main transition-colors group">
+<span class="material-symbols-outlined text-[24px] group-hover:-translate-y-0.5 transition-transform">search</span>
+<span class="text-[10px] font-medium tracking-tight">Search</span>
+</button>
+<button class="flex flex-col items-center gap-1.5 w-16 text-gray-400 hover:text-text-main transition-colors group">
+<div class="w-6 h-6 rounded-full overflow-hidden ring-1 ring-[#E8DE2A] p-[1px] group-hover:ring-black transition-all">
+<img class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpoj4gAOudF1aCtLKIgaUKTkdI5Cq7sO7UmEdkG1XBIDQRfb7CoxKUDWSe9Rr4wftj7As-hAPvY4x4yy4PmZmw6KmndfP1vAD1RDPZnM95T87amHq8PeoCqNAtX9LtSuoK33CAOuAYRSzzYMaTkzWSeoVc8uZrX3-CmEwm2mA6BrPS8qejGe7h3cv-ywwYzhlojQUqXcC_X5rGGN1ckhlYGQDBMai-emy2L3tHUVXCjmZ5inp09FrRAv7w5S6NaqUWPn2TQHr_i4s"/>
+</div>
+<span class="text-[10px] font-medium tracking-tight">Profile</span>
+</button>
+</nav>
+
+</body></html>

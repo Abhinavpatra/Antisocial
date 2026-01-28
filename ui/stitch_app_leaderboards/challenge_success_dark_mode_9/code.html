@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Onboarding 3 Light Mode</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#E8DE2A",
+                        "surface": "#FFFFFF",
+                        "text-main": "#111827",
+                        "text-sub": "#9CA3AF",
+                        "divider": "#F3F4F6",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Spline Sans", sans-serif;
+        }
+        .ios-border {
+            box-shadow: inset 0 0 0 1px #E8DE2A;
+        }.toggle-checkbox:checked {
+            right: 0;
+            border-color: #E8DE2A;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #E8DE2A;
+        }.no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center font-display overflow-hidden p-4">
+<div class="relative w-full max-w-md h-[844px] flex flex-col bg-surface ios-border rounded-[2.5rem] shadow-2xl overflow-hidden">
+<div class="h-12 w-full flex items-end justify-between px-7 pb-2 z-10 select-none">
+<span class="text-xs font-semibold text-text-main ml-1">9:41</span>
+<div class="flex gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-text-main">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-[16px] text-text-main">wifi</span>
+<span class="material-symbols-outlined text-[16px] text-text-main">battery_full</span>
+</div>
+</div>
+<div class="px-7 pt-4 pb-2 z-10">
+<h1 class="text-3xl font-bold text-text-main tracking-tight mb-3">Your Data,<br/>Your Control</h1>
+<p class="text-text-sub text-sm leading-relaxed pr-4">Choose exactly what you share. Let's get started on your focus journey.</p>
+</div>
+<div class="flex-1 overflow-y-auto no-scrollbar bg-surface relative mt-2">
+<div class="flex flex-col border-t border-divider">
+<div class="flex items-center justify-between px-6 py-4 border-b border-divider hover:bg-gray-50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-pink-50 border border-pink-100 flex items-center justify-center text-pink-500 shadow-sm">
+<span class="material-symbols-outlined">photo_camera</span>
+</div>
+<div class="flex flex-col">
+<span class="text-base font-medium text-text-main">Instagram</span>
+<span class="text-xs text-text-sub">Activity visible</span>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between px-6 py-4 border-b border-divider hover:bg-gray-50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-red-50 border border-red-100 flex items-center justify-center text-red-500 shadow-sm">
+<span class="material-symbols-outlined">play_circle</span>
+</div>
+<div class="flex flex-col">
+<span class="text-base font-medium text-text-main">YouTube</span>
+<span class="text-xs text-text-sub">Activity visible</span>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between px-6 py-4 border-b border-divider hover:bg-gray-50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-800 shadow-sm">
+<span class="material-symbols-outlined">music_note</span>
+</div>
+<div class="flex flex-col">
+<span class="text-base font-medium text-text-main">TikTok</span>
+<span class="text-xs text-text-sub">Hidden</span>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between px-6 py-4 border-b border-divider hover:bg-gray-50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-500 shadow-sm">
+<span class="material-symbols-outlined">code</span>
+</div>
+<div class="flex flex-col">
+<span class="text-base font-medium text-text-main">VS Code</span>
+<span class="text-xs text-text-sub">Activity visible</span>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between px-6 py-4 border-b border-divider hover:bg-gray-50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-purple-50 border border-purple-100 flex items-center justify-center text-purple-500 shadow-sm">
+<span class="material-symbols-outlined">palette</span>
+</div>
+<div class="flex flex-col">
+<span class="text-base font-medium text-text-main">Figma</span>
+<span class="text-xs text-text-sub">Hidden</span>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+<div class="px-6 py-8">
+<div class="bg-gray-50 rounded-2xl p-4 border border-divider flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-white border border-gray-100 flex items-center justify-center text-gray-400">
+<span class="material-symbols-outlined">visibility_off</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-semibold text-text-main">Ghost Mode</p>
+<p class="text-xs text-text-sub">Hide all activity temporarily</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</div>
+<div class="w-full bg-surface border-t border-divider pt-6 pb-8 px-6 z-20">
+<div class="flex justify-center gap-2 mb-6">
+<div class="w-2 h-2 rounded-full bg-gray-200"></div>
+<div class="w-2 h-2 rounded-full bg-gray-200"></div>
+<div class="w-2 h-2 rounded-full bg-gray-200"></div>
+<div class="w-2 h-2 rounded-full bg-gray-200"></div>
+<div class="w-8 h-2 rounded-full bg-primary transition-all duration-300"></div> 
+<div class="w-2 h-2 rounded-full bg-gray-200"></div>
+</div>
+<button class="w-full bg-primary text-text-main font-bold text-lg py-4 rounded-2xl shadow-soft hover:shadow-md transition-all active:scale-[0.98]">
+            Get Started
+        </button>
+<div class="flex justify-center mt-6">
+<div class="w-32 h-1.5 bg-gray-200 rounded-full"></div>
+</div>
+</div>
+</div>
+</body></html>
