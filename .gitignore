@@ -3,6 +3,7 @@
 # dependencies
 node_modules/
 .cursorrules
+.cursorignore
 # Expo
 .expo/
 dist/
