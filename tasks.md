@@ -86,7 +86,7 @@ This implementation follows a two-phase approach: Phase 1 creates a fully offlin
     - Add uninstallation prevention during active challenges
     - _Requirements: 5.3, 5.4, 5.5, 9.1, 9.2, 9.3, 9.4, 9.5, 9.6_
 
-  - [ ]* 5.3 Write property tests for challenge system
+  - [ ] 5.3 Write property tests for challenge system
     - **Property 11: Challenge Creation and Configuration**
     - **Property 12: Challenge Enforcement Blocking**
     - **Property 13: Challenge Integrity Protection**
@@ -113,7 +113,7 @@ This implementation follows a two-phase approach: Phase 1 creates a fully offlin
     - Prevent duplicate badge awards
     - _Requirements: 8.1, 8.2, 8.3, 8.4, 8.5_
 
-  - [ ]* 7.3 Write property tests for gamification systems
+  - [ ] 7.3 Write property tests for gamification systems
     - **Property 14: Coin Transaction Management**
     - **Property 18: Badge Management System**
     - **Property 19: Badge Variety and Categorization**
@@ -134,7 +134,7 @@ This implementation follows a two-phase approach: Phase 1 creates a fully offlin
     - Create offline placeholder UI with "reload" message
     - _Requirements: 4.1, 4.2, 4.3, 4.5_
 
-  - [ ]* 8.3 Write property tests for social features
+  - [ ] 8.3 Write property tests for social features
     - **Property 5: User Search and Discovery**
     - **Property 6: Friendship Lifecycle Management**
     - **Property 7: Friend List Consistency**
@@ -157,7 +157,7 @@ This implementation follows a two-phase approach: Phase 1 creates a fully offlin
     - Create feedback intensity levels (subtle, moderate, strong)
     - _Requirements: 11.1, 11.2, 11.3, 11.4_
 
-  - [ ]* 9.3 Write property tests for UI and feedback systems
+  - [ ] 9.3 Write property tests for UI and feedback systems
     - **Property 20: Performance and Navigation Requirements**
     - **Property 21: Audio Feedback System**
     - **Validates: Requirements 10.7, 10.8, 10.9, 11.4**
@@ -177,7 +177,7 @@ This implementation follows a two-phase approach: Phase 1 creates a fully offlin
     - Prepare synchronization interfaces for Phase 2
     - _Requirements: 13.2, 13.3, 13.4, 13.5_
 
-  - [ ]* 10.3 Write property tests for data management
+  - [ ] 10.3 Write property tests for data management
     - **Property 29: Offline Functionality Completeness**
     - **Property 30: Data Retention and Cleanup**
     - **Property 26: Data Persistence and Synchronization**
@@ -192,7 +192,7 @@ This implementation follows a two-phase approach: Phase 1 creates a fully offlin
     - Ensure data privacy compliance
     - _Requirements: 12.1, 12.3, 12.4, 12.5_
 
-  - [ ]* 11.2 Write property tests for security features
+  - [ ] 11.2 Write property tests for security features
     - **Property 23: Data Encryption and Security**
     - **Property 24: Data Access Permission Control**
     - **Property 25: Account Deletion and Data Removal**
@@ -206,7 +206,7 @@ This implementation follows a two-phase approach: Phase 1 creates a fully offlin
     - Prepare admin interface structure for Phase 2
     - _Requirements: 6.1, 6.2, 6.3, 6.4, 6.5, 6.6_
 
-  - [ ]* 12.2 Write property tests for popular challenges
+  - [ ] 12.2 Write property tests for popular challenges
     - **Property 15: Popular Challenge Distribution**
     - **Property 16: Shared Challenge Leaderboards**
     - **Validates: Requirements 6.1, 6.2, 6.4, 6.5, 6.6**
@@ -219,7 +219,7 @@ This implementation follows a two-phase approach: Phase 1 creates a fully offlin
     - Test platform-specific implementations on both iOS and Android
     - _Requirements: All requirements_
 
-  - [ ]* 13.2 Write integration tests for complete workflows
+  - [ ] 13.2 Write integration tests for complete workflows
     - Test user registration and authentication flow
     - Test challenge creation, enforcement, and completion
     - Test usage tracking and data aggregation
@@ -244,7 +244,6 @@ Phase 2 will add:
 
 ## Notes
 
-- Tasks marked with `*` are optional and can be skipped for faster MVP
 - Each task references specific requirements for traceability
 - Checkpoints ensure incremental validation
 - Property tests validate universal correctness properties
