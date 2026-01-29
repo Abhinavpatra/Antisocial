@@ -85,18 +85,18 @@ This document provides a structured, sequenced implementation order for the Soci
 
 ### 1.4 Testing Infrastructure Setup
 
-- [ ] **1.4.1** Install testing dependencies
+- [x] **1.4.1** Install testing dependencies
   ```
   Dependencies: jest, @types/jest, fast-check, @testing-library/react-native, msw
   ```
-- [ ] **1.4.2** Configure Jest for TypeScript and React Native
+- [x] **1.4.2** Configure Jest for TypeScript and React Native
   - Create `jest.config.js`
   - Configure transform for TypeScript
   - Setup module name mapper for path aliases
-- [ ] **1.4.3** Create test utilities and mock factories
+- [x] **1.4.3** Create test utilities and mock factories
   - Create `__tests__/utils/testUtils.ts`
   - Create mock data generators for User, Challenge, Usage models
-- [ ] **1.4.4** Add test scripts to package.json
+- [x] **1.4.4** Add test scripts to package.json
   ```json
   {
     "scripts": {

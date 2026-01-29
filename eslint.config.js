@@ -3,6 +3,7 @@ const { defineConfig } = require('eslint/config');
 const expoConfig = require('eslint-config-expo/flat');
 const prettierConfig = require('eslint-config-prettier');
 const reactNativePlugin = require('eslint-plugin-react-native');
+const tsPlugin = require('@typescript-eslint/eslint-plugin');
 
 module.exports = defineConfig([
   // Base Expo config - includes React Native specific rules
@@ -12,15 +13,28 @@ module.exports = defineConfig([
   prettierConfig,
 
   {
-    ignores: ['dist/*', 'node_modules/*', '.expo/*'],
+    ignores: [
+      'dist/*',
+      'node_modules/*',
+      '.expo/*',
+      'jest.config.js',
+      'babel.config.js',
+      'metro.config.js',
+      'tailwind.config.js',
+    ],
+  },
+
+  // Define plugins globally so they are available for all files
+  {
+    plugins: {
+      'react-native': reactNativePlugin,
+      '@typescript-eslint': tsPlugin,
+    },
   },
 
   // TypeScript & React Native rules
   {
-    files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
-    plugins: {
-      'react-native': reactNativePlugin,
-    },
+    files: ['**/*.ts', '**/*.tsx'],
     rules: {
       // TypeScript-specific rules
       '@typescript-eslint/explicit-function-return-type': 'off', // Can be 'warn' if you want stricter typing
