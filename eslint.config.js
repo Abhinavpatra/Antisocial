@@ -2,6 +2,7 @@
 const { defineConfig } = require('eslint/config');
 const expoConfig = require('eslint-config-expo/flat');
 const prettierConfig = require('eslint-config-prettier');
+const reactNativePlugin = require('eslint-plugin-react-native');
 
 module.exports = defineConfig([
   // Base Expo config - includes React Native specific rules
@@ -14,20 +15,17 @@ module.exports = defineConfig([
     ignores: ['dist/*', 'node_modules/*', '.expo/*'],
   },
 
-  // TypeScript-specific rules
+  // TypeScript & React Native rules
   {
-    files: ['**/*.ts', '**/*.tsx'],
+    files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
+    plugins: {
+      'react-native': reactNativePlugin,
+    },
     rules: {
       // TypeScript-specific rules
       '@typescript-eslint/explicit-function-return-type': 'off', // Can be 'warn' if you want stricter typing
       '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/no-unused-vars': [
-        'warn',
-        {
-          argsIgnorePattern: '^_',
-          varsIgnorePattern: '^_',
-        },
-      ],
+      '@typescript-eslint/no-unused-vars': 'off',
       '@typescript-eslint/consistent-type-imports': [
         'warn',
         {
@@ -36,9 +34,16 @@ module.exports = defineConfig([
         },
       ],
 
-      // React rules (React Native rules are handled by expo config)
+      // React rules
       'react/react-in-jsx-scope': 'off', // Not needed in React 17+
       'react/prop-types': 'off', // Using TypeScript for prop validation
+
+      // React Native rules (adjusted for NativeWind/Tailwind usage)
+      'react-native/no-unused-styles': 'warn', // Detect unused StyleSheet styles
+      'react-native/no-inline-styles': 'off', // Disabled - using NativeWind className
+      'react-native/no-color-literals': 'off', // Tailwind handles colors via classes
+      'react-native/no-raw-text': 'off', // Can enable to enforce Text wrapping
+      'react-native/split-platform-components': 'warn', // Detect platform-specific imports
 
       // General code quality
       'no-console': ['warn', { allow: ['warn', 'error'] }],
