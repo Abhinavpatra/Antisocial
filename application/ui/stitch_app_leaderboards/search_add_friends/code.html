@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Search &amp; Add Friends</title>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#D5B60A",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#121212",
+                        "surface-dark": "#1E1E1E",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body {
+            min-height: 100dvh;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-dark text-white selection:bg-primary/30">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<div class="sticky top-0 z-10 bg-background-dark/95 backdrop-blur-md transition-colors duration-200">
+<div class="flex items-center px-4 py-3 justify-between">
+<button class="flex size-10 items-center justify-center rounded-full hover:bg-white/10 transition-colors text-white">
+<span class="material-symbols-outlined" style="font-size: 24px;">arrow_back</span>
+</button>
+<h2 class="text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10">Find Friends</h2>
+</div>
+</div>
+<div class="px-4 py-2">
+<label class="group flex flex-col w-full">
+<div class="flex w-full items-center rounded-full h-12 bg-surface-dark border border-white/10 focus-within:border-primary transition-all duration-300 shadow-sm">
+<div class="text-slate-500 flex items-center justify-center pl-4 pr-2">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="flex w-full min-w-0 flex-1 bg-transparent border-none text-base font-normal placeholder:text-slate-500 text-white focus:ring-0 focus:outline-none h-full rounded-r-full" placeholder="Search by username" value=""/>
+</div>
+</label>
+</div>
+<div class="px-4 mt-6">
+<div class="flex items-center justify-between p-4 rounded-xl bg-primary/10 border border-primary/20 cursor-pointer hover:bg-primary/20 transition-colors">
+<div class="flex items-center gap-4">
+<div class="flex items-center justify-center rounded-full bg-primary/20 text-primary size-10 shrink-0">
+<span class="material-symbols-outlined">person_add</span>
+</div>
+<p class="text-base font-medium leading-normal">Pending Requests</p>
+</div>
+<div class="shrink-0 flex items-center gap-2">
+<span class="bg-primary text-[#121212] text-xs font-bold px-2.5 py-1 rounded-full">3</span>
+<span class="material-symbols-outlined text-primary/70 text-sm">arrow_forward_ios</span>
+</div>
+</div>
+</div>
+<div class="px-4 pt-8 pb-2 flex items-center justify-between">
+<h3 class="text-white text-lg font-bold leading-tight tracking-tight">Suggested Friends</h3>
+<button class="text-xs text-primary font-medium uppercase tracking-wider">See All</button>
+</div>
+<div class="flex flex-col px-4 gap-3 mb-32">
+<div class="flex items-center gap-4 p-3 rounded-2xl bg-surface-dark border border-white/5 shadow-sm">
+<div class="relative shrink-0">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-12 w-12 border border-white/10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCI_SB3wIRG87scqv2hGQAcDWqmL4sVKg6dQ4QTeNdrzY80O7LZh4RKdMftyvWaPtJcWw9iQZcj42-BdSarPCmkiDeh_I7_d97KzEUdE0C2R_UM_APWZmFhUb0fIiXpmQFh21zP89kTThv62Jp5-I_m1RCer0am26fBkp2WRMVf7UKkkIz49Ev23hntiImCRnxu6iMPSseVZ1gNxTC9lhTmD403oItgGZ9zKiojjlMzAbi1IVuyoiGOqkfA_b3rUoe4wfSENZZADao");'>
+</div>
+<div class="absolute bottom-0 right-0 size-3 rounded-full bg-green-500 border-2 border-surface-dark"></div>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<p class="text-white text-base font-semibold truncate">alex_tracker</p>
+<p class="text-slate-400 text-xs truncate">Mutual friend with @jess_run</p>
+</div>
+<div class="shrink-0">
+<button class="flex min-w-[80px] cursor-pointer items-center justify-center rounded-full h-9 px-4 bg-primary text-[#121212] text-sm font-bold shadow-lg shadow-primary/20 hover:brightness-110 active:scale-95 transition-all">
+                        Add
+                    </button>
+</div>
+</div>
+<div class="flex items-center gap-4 p-3 rounded-2xl bg-surface-dark border border-white/5 shadow-sm">
+<div class="shrink-0">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-12 w-12 border border-white/10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAzuzGW7rfQng7uyQSiBrQd5d0askeVQxN8gzWo_4aCJAPH75I4hgKhNH5hLDy1rtrmEIS004-hcxeWdo1Zr7IXAHViVPTAzmEG1HLi-TH07cDGIzB6Yo0rrQsGimFw27S8tgsdMP029W2WLTadHLpWun-6VToagt6wOR2P-nqKEjxkMLY7xaQVf-mpV108Q4H-flhfpTDN7qZNUg79KBNnPaxXOtXISFBoTuloYFLlTUhxRJyTyxRN3PpSCqO2wjD4FXlfHFpcpvs");'>
+</div>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<p class="text-white text-base font-semibold truncate">sarah_games</p>
+<p class="text-slate-400 text-xs truncate">Top 10 this week</p>
+</div>
+<div class="shrink-0">
+<button class="flex min-w-[80px] cursor-pointer items-center justify-center rounded-full h-9 px-4 bg-transparent border border-primary text-primary text-sm font-semibold hover:bg-primary/10 active:scale-95 transition-all">
+                        Cancel
+                    </button>
+</div>
+</div>
+<div class="flex items-center gap-4 p-3 rounded-2xl bg-surface-dark border border-white/5 shadow-sm">
+<div class="shrink-0">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-12 w-12 border border-white/10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDxVvV5j77KeilN8vGDu_apKx_qFzFQF2-E-HUPYl0W-55VvX3J8-G1L9dF9b_LKWPWFgGNHVwQDcKti-YZ0NdLwkehrEmQQDIe4So9CpMmoBSfYGZ3PTBc0JIlcwchLr7Oah1mtmb4vsYj7oEdKL-ESs6ZzlcljTJZ39jz-zOBzBqlVAzUSXmGFr6U_9LBv4mOBDPYXcSdvN15cCSHDaR8R0EX3392KnTmxRP0d-8OuqRhZ7-u9P-A6LDdH9lHpVeVF7CVVGaCJg0");'>
+</div>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<p class="text-white text-base font-semibold truncate">mike_flow</p>
+<p class="text-slate-400 text-xs truncate">New to platform</p>
+</div>
+<div class="shrink-0">
+<button class="flex min-w-[80px] cursor-pointer items-center justify-center rounded-full h-9 px-4 bg-primary text-[#121212] text-sm font-bold shadow-lg shadow-primary/20 hover:brightness-110 active:scale-95 transition-all">
+                        Add
+                    </button>
+</div>
+</div>
+<div class="flex items-center gap-4 p-3 rounded-2xl bg-surface-dark border border-white/5 shadow-sm">
+<div class="shrink-0">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-12 w-12 border border-white/10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDfIh9_S-zVt2Kld04yf68vSUoyYPIqTeuAgp2QLhDavFJvMzGw9cJocEjBB6_eP6CdSnISAE5webL945dqWenfX8oT-OaRMX5qtpYvSDExBaqrYg-XfNtACd4JVFsleNrTaMfox0sceDGz3XR3lodPaLlvqbcwgWkvzoo2f1TBl16isuksZ85tLHw2cPMC5XLB1JwoJYUPc4Sph2CFnE2pIGVAuHxiRzEHWbMTgJMAqKw3SkEU1l2Vc2DzQN-v5enoJrUC8IOssWs");'>
+</div>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<p class="text-white text-base font-semibold truncate">david_pixel</p>
+<p class="text-slate-400 text-xs truncate">Mutual friend with @alex_tracker</p>
+</div>
+<div class="shrink-0">
+<button class="flex min-w-[80px] cursor-pointer items-center justify-center rounded-full h-9 px-4 bg-primary text-[#121212] text-sm font-bold shadow-lg shadow-primary/20 hover:brightness-110 active:scale-95 transition-all">
+                        Add
+                    </button>
+</div>
+</div>
+</div>
+<div class="fixed bottom-0 left-0 right-0 bg-background-dark/80 backdrop-blur-xl border-t border-primary/30 pb-8 pt-3 z-50">
+<div class="flex justify-around items-center px-4 max-w-lg mx-auto">
+<button class="flex flex-col items-center justify-center gap-1 text-slate-500 hover:text-slate-300 transition-colors">
+<span class="material-symbols-outlined text-2xl">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 text-slate-500 hover:text-slate-300 transition-colors">
+<span class="material-symbols-outlined text-2xl">leaderboard</span>
+<span class="text-[10px] font-medium">Leaderboard</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 text-slate-500 hover:text-slate-300 transition-colors">
+<span class="material-symbols-outlined text-2xl">emoji_events</span>
+<span class="text-[10px] font-medium">Challenges</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 text-primary relative">
+<div class="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-primary rounded-full shadow-[0_0_8px_rgba(213,182,10,0.6)]"></div>
+<span class="material-symbols-outlined text-2xl fill-1 font-variation-settings-'FILL'-1">search</span>
+<span class="text-[10px] font-bold">Search</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 text-slate-500 hover:text-slate-300 transition-colors">
+<span class="material-symbols-outlined text-2xl">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</button>
+</div>
+</div>
+</div>
+
+</body></html>

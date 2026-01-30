@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Onboarding 2 Light Mode</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#E8DE2A",
+                        "surface": "#FFFFFF",
+                        "text-main": "#111827",
+                        "text-sub": "#9CA3AF",
+                        "divider": "#F3F4F6",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Spline Sans", sans-serif;
+        }
+        .ios-border {
+            box-shadow: inset 0 0 0 1px #E8DE2A;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center font-display overflow-hidden p-4">
+<div class="relative w-full max-w-md h-[844px] flex flex-col bg-surface ios-border rounded-[2.5rem] shadow-2xl overflow-hidden">
+<div class="h-12 w-full flex items-end justify-between px-7 pb-2 z-10 select-none">
+<span class="text-xs font-semibold text-text-main ml-1">9:41</span>
+<div class="flex gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-text-main">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-[16px] text-text-main">wifi</span>
+<span class="material-symbols-outlined text-[16px] text-text-main">battery_full</span>
+</div>
+</div>
+<div class="w-full flex justify-end px-6 py-4">
+<button class="text-sm font-medium text-text-sub hover:text-text-main transition-colors px-2 py-1">Skip</button>
+</div>
+<div class="flex-1 flex flex-col items-center justify-center px-8 relative">
+<div class="relative w-full aspect-square max-w-[280px] flex items-end justify-center gap-3 pb-8 mb-4">
+<div class="flex flex-col items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-400">
+<span class="material-symbols-outlined text-[24px]">person</span>
+</div>
+<div class="w-16 h-24 rounded-t-2xl bg-gray-50 border border-gray-100 flex items-end justify-center pb-2 shadow-sm">
+<span class="text-2xl font-bold text-gray-300">2</span>
+</div>
+</div>
+<div class="flex flex-col items-center gap-3 -translate-y-2">
+<div class="relative">
+<span class="material-symbols-outlined text-[48px] text-primary absolute -top-14 left-1/2 -translate-x-1/2 drop-shadow-sm" style="font-variation-settings: 'FILL' 1;">emoji_events</span>
+<div class="w-16 h-16 rounded-full bg-yellow-50 border-2 border-primary flex items-center justify-center text-primary shadow-sm">
+<span class="material-symbols-outlined text-[32px]" style="font-variation-settings: 'FILL' 1;">person</span>
+</div>
+</div>
+<div class="w-20 h-40 rounded-t-2xl bg-gradient-to-b from-yellow-50/50 to-white border border-primary/30 flex items-end justify-center pb-4 shadow-soft">
+<span class="text-4xl font-bold text-primary">1</span>
+</div>
+</div>
+<div class="flex flex-col items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-400">
+<span class="material-symbols-outlined text-[24px]">person</span>
+</div>
+<div class="w-16 h-16 rounded-t-2xl bg-gray-50 border border-gray-100 flex items-end justify-center pb-2 shadow-sm">
+<span class="text-2xl font-bold text-gray-300">3</span>
+</div>
+</div>
+<div class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent opacity-80 scale-150"></div>
+</div>
+<div class="text-center space-y-3 max-w-xs">
+<h1 class="text-[28px] font-bold text-text-main leading-tight tracking-tight">Compete with Friends</h1>
+<p class="text-text-sub text-[15px] leading-relaxed">
+                Join challenges and climb the leaderboards to stay motivated.
+            </p>
+</div>
+</div>
+<div class="px-6 pb-4 w-full flex flex-col items-center gap-6">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-gray-200"></div>
+<div class="w-6 h-2 rounded-full bg-primary"></div>
+<div class="w-2 h-2 rounded-full bg-gray-200"></div>
+<div class="w-2 h-2 rounded-full bg-gray-200"></div>
+</div>
+<button class="w-full h-14 bg-primary rounded-2xl flex items-center justify-center shadow-lg shadow-yellow-200/50 transition-transform active:scale-[0.98]">
+<span class="text-text-main font-bold text-lg">Next</span>
+</button>
+</div>
+<div class="w-full pt-4 pb-8 flex justify-center bg-surface">
+<div class="w-32 h-1.5 bg-gray-200 rounded-full"></div>
+</div>
+</div>
+
+</body></html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Challenges Light Mode (5-item Nav)</title>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#E8DE2A",
+                        "primary-dark": "#d1c720",
+                        "accent-yellow": "#E8DE2A",
+                        "background-light": "#f8f9fa",
+                        "surface-light": "#ffffff",
+                        "text-main": "#1a1a1a",
+                        "text-muted": "#6b7280",
+                        "border-light": "#e5e7eb",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "1.5rem", "xl": "2rem", "2xl": "2.5rem", "full": "9999px"},
+                    boxShadow: {
+                        "soft": "0 2px 8px -2px rgba(0, 0, 0, 0.05)",
+                    }
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light text-text-main font-display antialiased overflow-x-hidden selection:bg-primary selection:text-black">
+<div class="relative flex h-full min-h-screen w-full flex-col pb-28">
+<header class="sticky top-0 z-50 flex items-center justify-between px-6 py-4 bg-background-light/95 backdrop-blur-sm border-b border-border-light">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-gray-200 overflow-hidden ring-1 ring-primary" data-alt="User avatar profile picture">
+<img class="w-full h-full object-cover" data-alt="User profile photo smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpoj4gAOudF1aCtLKIgaUKTkdI5Cq7sO7UmEdkG1XBIDQRfb7CoxKUDWSe9Rr4wftj7As-hAPvY4x4yy4PmZmw6KmndfP1vAD1RDPZnM95T87amHq8PeoCqNAtX9LtSuoK33CAOuAYRSzzYMaTkzWSeoVc8uZrX3-CmEwm2mA6BrPS8qejGe7h3cv-ywwYzhlojQUqXcC_X5rGGN1ckhlYGQDBMai-emy2L3tHUVXCjmZ5inp09FrRAv7w5S6NaqUWPn2TQHr_i4s"/>
+</div>
+<h1 class="text-2xl font-bold tracking-tight text-text-main">Challenges</h1>
+</div>
+<div class="flex items-center gap-2 bg-white rounded-full pl-3 pr-4 py-1.5 border border-border-light shadow-soft ring-1 ring-primary/20">
+<span class="material-symbols-outlined text-primary text-[20px] fill-1">monetization_on</span>
+<span class="text-text-main font-bold text-sm tracking-wide">1,250</span>
+</div>
+</header>
+<section class="mt-6 px-4">
+<div class="flex items-center justify-between mb-4 px-2">
+<h2 class="text-lg font-bold tracking-tight text-text-main">Current Focus</h2>
+<button class="text-text-muted hover:text-primary text-sm font-medium transition-colors">View All</button>
+</div>
+<div class="relative overflow-hidden rounded-3xl bg-white border border-primary shadow-soft group transition-all duration-300">
+<div class="p-5">
+<div class="flex justify-between items-start mb-6">
+<div class="flex gap-4">
+<div class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
+<span class="material-symbols-outlined text-[32px] fill-1">bolt</span>
+</div>
+<div>
+<h3 class="text-xl font-bold text-text-main leading-tight">Video Break</h3>
+<div class="flex items-center gap-2 mt-1.5">
+<span class="px-2 py-0.5 rounded-full bg-yellow-50 border border-yellow-100 text-[10px] font-bold text-yellow-700 uppercase tracking-wide">Hard</span>
+<div class="flex items-center gap-1 text-xs font-medium text-text-muted">
+<span class="w-1 h-1 rounded-full bg-gray-300"></span>
+<span>+50 Coins</span>
+</div>
+</div>
+</div>
+</div>
+<div class="relative w-10 h-10 flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+<path class="text-gray-100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"></path>
+<path class="text-primary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="75, 100" stroke-width="3"></path>
+</svg>
+<span class="absolute text-[10px] font-bold text-text-main">75%</span>
+</div>
+</div>
+<div class="flex flex-col gap-3 mb-6">
+<div class="flex justify-between text-sm font-medium">
+<span class="text-text-muted text-xs font-semibold uppercase tracking-wider">Time Remaining</span>
+<span class="text-text-main text-xs font-bold bg-gray-100 px-2 py-0.5 rounded-md">45m</span>
+</div>
+<div class="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full relative w-[75%]"></div>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="flex-1 bg-white hover:bg-gray-50 text-text-muted font-semibold py-3.5 px-4 rounded-xl transition-all border border-border-light flex items-center justify-center gap-2 text-sm shadow-sm">
+                            Give Up
+                        </button>
+<button class="flex-[2] bg-primary hover:bg-primary-dark text-black font-bold py-3.5 px-4 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm shadow-sm ring-1 ring-black/5">
+<span class="material-symbols-outlined text-[20px] fill-1">check_circle</span>
+                            Check In
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<section class="mt-8">
+<div class="px-6 mb-5 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[24px]">trending_up</span>
+<h2 class="text-lg font-bold tracking-tight text-text-main">Trending Now</h2>
+</div>
+<div class="flex overflow-x-auto gap-4 px-6 pb-6 scrollbar-hide snap-x snap-mandatory">
+<div class="snap-center shrink-0 w-[260px] bg-white rounded-3xl overflow-hidden border border-border-light shadow-soft flex flex-col group cursor-pointer hover:border-primary transition-all duration-300">
+<div class="h-32 bg-cover bg-center relative" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD44yUhjNyw51AV0n_NVJqNixuaniXK3e_WoejZCfz2ypou3PtPtL1oyu0wKNKxmAY_Yw9MslDfuxzWl8VD_hmEGkHN7VpjjFAsrCkAN5f0MVtCmHGqnzYT8M-A_IDH62DNkZmxdEXwYucsL_6h91DfHIsibJ-SwmKsNknRoEIHDNklsIgfAfxJAlSRrBIf4U9wiVLjD2CiUZBk3fJD5hfds6su28aMYlkba20nNCXni8aVfEKW5al1wBtxfolypA3p83ZgeISMDFY')">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-lg text-text-main shadow-sm">
+<span class="text-[11px] font-bold">24h</span>
+</div>
+</div>
+<div class="p-5 flex flex-col flex-1">
+<h4 class="text-lg font-bold text-text-main mb-1.5">App Detox</h4>
+<p class="text-[13px] text-text-muted mb-4 line-clamp-2 leading-relaxed">Complete reset. No posting, no scrolling for a full day.</p>
+<div class="mt-auto flex items-center justify-between border-t border-gray-50 pt-4">
+<div class="flex items-center gap-1.5 bg-yellow-50 px-2 py-1 rounded-full border border-yellow-100">
+<span class="material-symbols-outlined text-yellow-600 text-[16px] fill-1">monetization_on</span>
+<span class="text-xs font-bold text-yellow-800">150</span>
+</div>
+<button class="w-9 h-9 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-text-main hover:bg-primary hover:border-primary hover:text-black transition-all">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<div class="snap-center shrink-0 w-[260px] bg-white rounded-3xl overflow-hidden border border-border-light shadow-soft flex flex-col group cursor-pointer hover:border-primary transition-all duration-300">
+<div class="h-32 bg-cover bg-center relative" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDtRcfTxEd3PrmYgmXXWEkH-TlJAk9CejD8EOInW3sABQwOp6YRwAdakz8s13Kb0oRuVpiJWvx0liXYV8HfImhog-b5CPAgsz6VXlYJX3c1u4heHtw6L74nXaO2ooysG05M5oToscIq-sSzU-WbSLHuepoioDxsuRqDjm0fzffV8ntBLvHKBxsJIBEGPuo4__m-iSzkoXjV4Ad-GLvVOLPSsVn-sNQdcT1odvpb5U6i-RxNKK9WhYonrZU_FM1VUWJsxvRA0_-kacA')">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-lg text-text-main shadow-sm">
+<span class="text-[11px] font-bold">4h</span>
+</div>
+</div>
+<div class="p-5 flex flex-col flex-1">
+<h4 class="text-lg font-bold text-text-main mb-1.5">Deep Work</h4>
+<p class="text-[13px] text-text-muted mb-4 line-clamp-2 leading-relaxed">Turn off notifications and focus on a single task.</p>
+<div class="mt-auto flex items-center justify-between border-t border-gray-50 pt-4">
+<div class="flex items-center gap-1.5 bg-yellow-50 px-2 py-1 rounded-full border border-yellow-100">
+<span class="material-symbols-outlined text-yellow-600 text-[16px] fill-1">monetization_on</span>
+<span class="text-xs font-bold text-yellow-800">80</span>
+</div>
+<button class="w-9 h-9 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-text-main hover:bg-primary hover:border-primary hover:text-black transition-all">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="mt-2 px-6 pb-6">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-orange-500 text-[24px]">local_fire_department</span>
+<h2 class="text-lg font-bold tracking-tight text-text-main">Dares from Friends</h2>
+</div>
+<div class="flex flex-col gap-3">
+<div class="flex items-center gap-4 p-4 rounded-2xl bg-white border border-border-light shadow-soft hover:shadow-md transition-shadow">
+<div class="relative shrink-0">
+<img class="w-12 h-12 rounded-full object-cover ring-2 ring-white shadow-sm" data-alt="Friend Alex avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJ60xwsrPssiuBxKTi5opTgWNArmrGjN3XCREXAIUciSwiFLSzFY2_Uka2tAZHzKt_zekFUPrli0pcZWxWD2QAWhJQZWUeQt_zPhu8xSN7Nn6rC2ehcsSS8cKSli5_ylyUGDHQAwR1i4TMjMB0sUQXNThjndE3KwTfXg-mdDzqmuoDLiVcdSdipThROJ87bvd7RmmTFtJ6cLNEV7yUOM13rkF6FTh_-exuxnoGnXG31vFIMmQAiFWl70Lanms9fxb0Ba8WLmVnNWI"/>
+<div class="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5 border border-border-light shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-primary fill-1">bolt</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm text-text-main mb-1"><span class="font-bold">Alex</span> dared you</p>
+<p class="text-xs text-text-muted truncate font-medium bg-gray-50 p-1.5 rounded-lg inline-block">"No video apps for 3 hours!"</p>
+<div class="flex items-center gap-1 mt-2">
+<span class="text-[10px] text-text-muted uppercase tracking-wide font-bold">Reward</span>
+<span class="text-[11px] text-text-main font-bold">100</span>
+<span class="material-symbols-outlined text-primary text-[14px] fill-1">monetization_on</span>
+</div>
+</div>
+<div class="flex gap-2 shrink-0">
+<button class="w-9 h-9 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-text-muted hover:text-red-500 transition-all">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+<button class="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-black shadow-sm">
+<span class="material-symbols-outlined text-[20px]">check</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<button class="fixed bottom-[100px] right-6 w-14 h-14 bg-black rounded-full flex items-center justify-center z-40 hover:scale-105 active:scale-95 transition-all shadow-lg ring-1 ring-primary">
+<span class="material-symbols-outlined text-white text-[28px]">add</span>
+</button>
+<nav class="fixed bottom-0 w-full bg-white border-t border-primary px-6 pb-8 pt-3 flex justify-between items-center z-50 shadow-[0_-4px_12px_-2px_rgba(0,0,0,0.05)]">
+<button class="flex flex-col items-center gap-1 w-[20%] text-text-muted hover:text-black transition-colors">
+<span class="material-symbols-outlined text-[26px]">home</span>
+<span class="text-[10px] font-semibold">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 w-[20%] text-text-muted hover:text-black transition-colors">
+<span class="material-symbols-outlined text-[26px]">leaderboard</span>
+<span class="text-[10px] font-semibold">Leaderboard</span>
+</button>
+<button class="flex flex-col items-center gap-1 w-[20%] text-black relative">
+<div class="absolute -top-3.5 w-10 h-1.5 bg-primary rounded-full"></div>
+<span class="material-symbols-outlined text-[26px] fill-1 text-primary">emoji_events</span>
+<span class="text-[10px] font-bold">Challenges</span>
+</button>
+<button class="flex flex-col items-center gap-1 w-[20%] text-text-muted hover:text-black transition-colors">
+<span class="material-symbols-outlined text-[26px]">search</span>
+<span class="text-[10px] font-semibold">Search</span>
+</button>
+<button class="flex flex-col items-center gap-1 w-[20%] text-text-muted hover:text-black transition-colors">
+<span class="material-symbols-outlined text-[26px]">person</span>
+<span class="text-[10px] font-semibold">Profile</span>
+</button>
+</nav>
+</div>
+
+</body></html>

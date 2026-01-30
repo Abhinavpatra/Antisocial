@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Create Account - Dark Mode</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d6b80a",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#222010",
+                        "surface-dark": "#2C2A1A", 
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem", 
+                        "lg": "2rem", 
+                        "xl": "3rem", 
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        "glow": "0 0 15px rgba(214, 184, 10, 0.15)",
+                        "glow-focus": "0 0 20px rgba(214, 184, 10, 0.3)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar hide for cleaner mobile view */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display min-h-screen flex flex-col relative overflow-hidden text-white antialiased selection:bg-primary/30 selection:text-primary">
+<!-- Decorative ambient glow -->
+<div class="fixed top-0 left-0 w-full h-64 bg-primary/5 rounded-full blur-[100px] pointer-events-none -translate-y-1/2 translate-x-1/4"></div>
+<div class="relative w-full max-w-md mx-auto px-6 py-8 flex flex-col h-screen max-h-[900px]">
+<!-- Top App Bar -->
+<header class="flex items-center justify-between mb-8">
+<button class="flex items-center justify-center size-12 -ml-3 text-white/80 hover:text-primary transition-colors rounded-full hover:bg-white/5 active:bg-white/10 group">
+<span class="material-symbols-outlined text-[28px] group-hover:-translate-x-0.5 transition-transform duration-300">arrow_back</span>
+</button>
+</header>
+<!-- Headline & Text -->
+<section class="mb-10">
+<h1 class="text-[32px] md:text-4xl font-bold leading-tight tracking-tight text-white mb-3">
+                Create Account
+            </h1>
+<p class="text-white/60 text-base font-normal leading-relaxed">
+                Start tracking your time effectively.
+            </p>
+</section>
+<!-- Form Fields -->
+<section class="flex flex-col gap-5 flex-1">
+<!-- Email Input -->
+<div class="group relative">
+<label class="sr-only" for="email">Email address</label>
+<div class="relative flex items-center transition-all duration-300">
+<!-- Ring Light Effect Wrapper -->
+<div class="absolute inset-0 rounded-full border border-primary/20 pointer-events-none group-focus-within:border-primary group-focus-within:shadow-glow-focus transition-all duration-300"></div>
+<input class="form-input block w-full h-16 pl-6 pr-12 bg-surface-dark/80 text-white placeholder:text-[#cbc290]/40 rounded-full border-none focus:ring-0 text-base font-normal shadow-sm z-10 bg-transparent" id="email" placeholder="Email address" type="email" value=""/>
+<!-- Icon -->
+<div class="absolute right-5 z-20 flex items-center justify-center text-[#cbc290]/60 pointer-events-none">
+<span class="material-symbols-outlined text-[20px]">mail</span>
+</div>
+</div>
+</div>
+<!-- Password Input -->
+<div class="group relative">
+<label class="sr-only" for="password">Password</label>
+<div class="relative flex items-center transition-all duration-300">
+<!-- Ring Light Effect Wrapper -->
+<div class="absolute inset-0 rounded-full border border-primary/20 pointer-events-none group-focus-within:border-primary group-focus-within:shadow-glow-focus transition-all duration-300"></div>
+<input class="form-input block w-full h-16 pl-6 pr-12 bg-surface-dark/80 text-white placeholder:text-[#cbc290]/40 rounded-full border-none focus:ring-0 text-base font-normal shadow-sm z-10 bg-transparent" id="password" placeholder="Password" type="password" value=""/>
+<!-- Toggle Visibility Icon -->
+<button class="absolute right-3 z-20 size-10 flex items-center justify-center text-[#cbc290]/60 hover:text-primary transition-colors rounded-full hover:bg-white/5 outline-none focus:bg-white/5">
+<span class="material-symbols-outlined text-[20px]">visibility_off</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Bottom Actions -->
+<footer class="mt-auto pt-6 flex flex-col gap-6 items-center w-full">
+<button class="w-full h-16 bg-primary text-background-dark text-lg font-bold rounded-full shadow-glow hover:shadow-glow-focus active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2 group">
+<span>Continue</span>
+<span class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<p class="text-white/50 text-sm font-normal">
+                Already have an account? 
+                <a class="text-primary hover:text-[#eacc15] font-semibold transition-colors ml-1 decoration-primary/30 underline-offset-4 hover:underline" href="#">Log in</a>
+</p>
+</footer>
+</div>
+</body></html>
