@@ -18,7 +18,7 @@ type SettingsDrawerProps = {
 
 export function SettingsDrawer({ isOpen, onClose }: SettingsDrawerProps) {
   const { colors, setMode, mode, setPalette, palette } = useAppTheme();
-  const translateX = useSharedValue(320);
+  const translateX = useSharedValue(-320);
   const opacity = useSharedValue(0);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export function SettingsDrawer({ isOpen, onClose }: SettingsDrawerProps) {
       translateX.value = withSpring(0, { damping: 20, stiffness: 90 });
       opacity.value = withTiming(0.5, { duration: 200 });
     } else {
-      translateX.value = withTiming(320, { duration: 260 });
+      translateX.value = withTiming(-320, { duration: 260 });
       opacity.value = withTiming(0, { duration: 200 });
     }
   }, [isOpen]);
@@ -39,7 +39,7 @@ export function SettingsDrawer({ isOpen, onClose }: SettingsDrawerProps) {
     opacity: opacity.value,
   }));
 
-  if (!isOpen && translateX.value === 320) return null;
+  if (!isOpen && translateX.value === -320) return null;
 
   const renderColorStrip = (pKey: PaletteName, label: string) => {
     const pColors = Palettes[pKey][mode === 'system' ? 'light' : mode]; // Preview in current mode
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   },
   panel: {
     position: 'absolute',
-    right: 0,
+    left: 0,
     top: 0,
     bottom: 0,
     width: 300,
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     zIndex: 101,
     shadowColor: '#000',
-    shadowOffset: { width: -2, height: 0 },
+    shadowOffset: { width: 2, height: 0 },
     shadowOpacity: 0.25,
     shadowRadius: 10,
     elevation: 6,

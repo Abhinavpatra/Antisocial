@@ -1,4 +1,4 @@
-import { AppColors, PaletteName, Palettes, ThemeName } from '@/constants/colors';
+import { PaletteName, Palettes, ThemeName } from '@/constants/colors';
 import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
 import { useColorScheme } from 'react-native';
 
@@ -6,7 +6,7 @@ type ThemeMode = ThemeName | 'system';
 
 type ThemeContextValue = {
   theme: ThemeName;
-  colors: (typeof AppColors)[ThemeName];
+  colors: (typeof Palettes)[PaletteName][ThemeName];
   mode: ThemeMode;
   palette: PaletteName;
   setMode: (mode: ThemeMode) => void;
