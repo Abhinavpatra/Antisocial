@@ -1,6 +1,5 @@
+import { useAppTheme } from '@/hooks/useTheme';
 import { Text, type TextProps } from 'react-native';
-
-import { useColorScheme } from '@/hooks/use-color-scheme';
 
 export type ThemedTextProps = TextProps & {
   lightColor?: string;
@@ -14,7 +13,7 @@ const typeClasses = {
   defaultSemiBold: 'text-base leading-6 font-semibold',
   title: 'text-3xl font-bold leading-8',
   subtitle: 'text-xl font-bold',
-  link: 'text-base leading-8 text-cyan-600',
+  link: 'text-base leading-8',
 };
 
 export function ThemedText({
@@ -22,19 +21,19 @@ export function ThemedText({
   lightColor,
   darkColor,
   type = 'default',
+  style,
   ...rest
 }: ThemedTextProps) {
-  const colorScheme = useColorScheme();
-
-  // Default text color based on theme
-  const textColorClass = colorScheme === 'dark' ? 'text-gray-100' : 'text-gray-900';
-
-  // Link has its own color
-  const finalColorClass = type === 'link' ? '' : textColorClass;
+  const { theme, colors } = useAppTheme();
+  const defaultColor = type === 'link' ? colors.primary : colors.text;
+  const resolvedColor =
+    theme === 'dark' ? (darkColor ?? defaultColor) : (lightColor ?? defaultColor);
+  const finalColorClass = type === 'link' ? '' : '';
 
   return (
     <Text
       className={`${finalColorClass} ${typeClasses[type]} ${className || ''}`}
+      style={[{ color: resolvedColor }, style]}
       {...rest}
     />
   );

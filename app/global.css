@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 248 248 246;
+    --surface: 255 255 255;
+    --surface-alt: 252 251 248;
+    --text: 27 26 14;
+    --text-muted: 151 148 78;
+    --border: 231 230 208;
+    --primary: 233 223 43;
+    --primary-alt: 234 215 42;
+    --ring: 232 222 42;
+    --shadow: 233 223 43;
+  }
+
+  .dark {
+    --background: 34 32 16;
+    --surface: 44 42 26;
+    --surface-alt: 46 43 27;
+    --text: 255 255 255;
+    --text-muted: 204 204 204;
+    --border: 255 255 255;
+    --primary: 214 184 10;
+    --primary-alt: 196 167 9;
+    --ring: 213 182 10;
+    --shadow: 214 184 10;
+  }
+}
