@@ -60,7 +60,7 @@ module.exports = defineConfig([
       'react-native/split-platform-components': 'warn', // Detect platform-specific imports
 
       // General code quality
-      'no-console': ['warn', { allow: ['warn', 'error'] }],
+      'no-console': ['warn', { allow: ['warn', 'error', 'log'] }],
       'prefer-const': 'warn',
       'no-var': 'error',
     },
