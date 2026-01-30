@@ -14,8 +14,8 @@ export const AppColors = {
     shadow: 'rgba(233,223,43,0.25)',
   },
   dark: {
-    background: '#222010',
-    surface: '#2C2A1A',
+    background: '#000000',
+    surface: '#0A0A0A',
     surfaceAlt: '#2E2B1B',
     text: '#FFFFFF',
     textMuted: '#CCCCCC',

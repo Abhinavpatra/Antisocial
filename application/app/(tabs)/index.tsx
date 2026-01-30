@@ -28,7 +28,7 @@ export default function HomeScreen() {
             <FocusSummaryRing progress={0.78} timeLabel="4h 22m" />
           </View>
 
-        <View style={[styles.section, styles.statsRow]}>
+          <View style={[styles.section, styles.statsRow]}>
             <StatCard
               label="Streak"
               value="12 Days"
@@ -48,9 +48,7 @@ export default function HomeScreen() {
               <ThemedText className="text-xs uppercase tracking-widest text-textMuted">
                 Active Focus
               </ThemedText>
-              <View
-                style={[styles.activeDot, { backgroundColor: colors.primary }]}
-              />
+              <View style={[styles.activeDot, { backgroundColor: colors.primary }]} />
             </View>
             <ActiveFocusCard
               title="Deep Work Session"
@@ -62,7 +60,9 @@ export default function HomeScreen() {
           </View>
 
           <View style={styles.section}>
-            <ThemedText style={styles.sectionTitle} className="text-xs uppercase tracking-widest text-textMuted">
+            <ThemedText
+              style={styles.sectionTitle}
+              className="text-xs uppercase tracking-widest text-textMuted">
               Today&apos;s Progress
             </ThemedText>
             <View style={styles.progressList}>
@@ -81,30 +81,6 @@ export default function HomeScreen() {
             </View>
           </View>
         </ScrollView>
-
-        <Pressable
-          style={({ pressed }) => [
-            {
-              position: 'absolute',
-              right: 24,
-              bottom: 90,
-              width: 56,
-              height: 56,
-              borderRadius: 28,
-              backgroundColor: colors.primary,
-              alignItems: 'center',
-              justifyContent: 'center',
-              shadowColor: colors.shadow,
-              shadowOpacity: 0.5,
-              shadowRadius: 10,
-              shadowOffset: { width: 0, height: 8 },
-              transform: [{ scale: pressed ? 0.96 : 1 }],
-            },
-          ]}
-          onPress={() => {}}
-        >
-          <FontAwesome5 name="plus" size={20} color={colors.text} />
-        </Pressable>
       </ThemedView>
     </SafeAreaView>
   );
