@@ -1,82 +1,65 @@
-import { Image } from 'expo-image';
-import { Platform } from 'react-native';
-
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
+import { Avatar } from '@/components/ui/Avatar';
+import { Badge } from '@/components/ui/Badge';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
+import { CoinDisplay } from '@/components/ui/CoinDisplay';
+import { ProgressRing } from '@/components/ui/ProgressRing';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import { ScrollView, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          className="h-[178px] w-[290px] absolute bottom-0 left-0"
-        />
-      }
-    >
-      <ThemedView className="flex-row items-center gap-2">
-        <ThemedText type="title">Welcome to the app!</ThemedText>
-        <HelloWave />
-      </ThemedView>
+    <SafeAreaView style={{ flex: 1 }}>
+      <ThemedView className="flex-1">
+        <ScrollView contentContainerStyle={{ padding: 20, gap: 24 }}>
+          <View className="items-center gap-2">
+            <ThemedText type="title">Design System</ThemedText>
+            <ThemedText className="text-center text-textMuted">
+              Core components and theme verification
+            </ThemedText>
+          </View>
 
-      <ThemedView className="gap-2 mb-2">
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
+          <Card className="gap-4">
+            <ThemedText type="subtitle">Typography & Colors</ThemedText>
+            <ThemedText>Default Text</ThemedText>
+            <ThemedText type="defaultSemiBold">SemiBold Text</ThemedText>
+            <ThemedText type="link">Link Text</ThemedText>
+            <ThemedText className="text-primary font-bold">Primary Color</ThemedText>
+            <ThemedText className="text-textMuted">Muted Text</ThemedText>
+          </Card>
 
-      <ThemedView className="gap-2 mb-2">
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
+          <Card className="gap-4">
+            <ThemedText type="subtitle">Buttons</ThemedText>
+            <Button label="Primary Button" onPress={() => {}} />
+            <Button label="Secondary Button" variant="secondary" onPress={() => {}} />
+            <Button label="Ghost Button" variant="ghost" onPress={() => {}} />
+            <Button label="Outline Button" variant="outline" onPress={() => {}} />
+          </Card>
 
-      <ThemedView className="gap-2 mb-2">
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
+          <Card className="gap-4">
+            <ThemedText type="subtitle">Data Display</ThemedText>
+            <View className="flex-row justify-between items-center">
+              <Avatar name="User Name" />
+              <CoinDisplay value={1250} />
+            </View>
+            <View className="flex-row gap-2 flex-wrap">
+              <Badge label="Early Adopter" />
+              <Badge label="Speedster" />
+              <Badge label="Socialite" />
+            </View>
+          </Card>
+
+          <Card className="gap-4 items-center">
+            <ThemedText type="subtitle">Progress Visualization</ThemedText>
+            <View className="flex-row gap-8">
+              <ProgressRing progress={0.75} label="75%" />
+              <ProgressRing progress={0.3} size={60} strokeWidth={6} />
+            </View>
+          </Card>
+        </ScrollView>
       </ThemedView>
-    </ParallaxScrollView>
+    </SafeAreaView>
   );
 }
