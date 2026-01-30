@@ -10,9 +10,15 @@ import { useUsage } from '@/hooks/useUsage';
 import { FontAwesome5 } from '@expo/vector-icons';
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import { runOnJS } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export function HomeScreen() {
+type HomeScreenProps = {
+  onOpenSettings?: () => void;
+};
+
+export function HomeScreen({ onOpenSettings }: HomeScreenProps) {
   const { colors } = useAppTheme();
 
   const { formattedTotalTime, totalTime } = useUsage();
@@ -21,14 +27,25 @@ export function HomeScreen() {
   const dailyGoal = 6 * 60 * 60 * 1000;
   const progress = Math.min(totalTime / dailyGoal, 1);
 
+  const swipeToOpen = Gesture.Pan()
+    .enabled(Boolean(onOpenSettings))
+    .activeOffsetX([20, 9999])
+    .failOffsetX([-9999, -10])
+    .onEnd((event) => {
+      if (event.translationX > 50 && onOpenSettings) {
+        runOnJS(onOpenSettings)();
+      }
+    });
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ThemedView className="flex-1">
-        <HomeHeader name="Alex Rivera" coins={1250} />
-        <ScrollView contentContainerStyle={styles.scrollContent}>
-          <View style={styles.section}>
-            <FocusSummaryRing progress={progress} timeLabel={formattedTotalTime} />
-          </View>
+      <GestureDetector gesture={swipeToOpen}>
+        <ThemedView className="flex-1">
+          <HomeHeader name="Alex Rivera" coins={1250} onLogoPress={onOpenSettings} />
+          <ScrollView contentContainerStyle={styles.scrollContent}>
+            <View style={styles.section}>
+              <FocusSummaryRing progress={progress} timeLabel={formattedTotalTime} />
+            </View>
 
           <View style={[styles.section, styles.statsRow]}>
             <StatCard
@@ -82,8 +99,9 @@ export function HomeScreen() {
               />
             </View>
           </View>
-        </ScrollView>
-      </ThemedView>
+          </ScrollView>
+        </ThemedView>
+      </GestureDetector>
     </SafeAreaView>
   );
 }

@@ -17,6 +17,7 @@ type PagerTabsProps = {
   currentIndex: number;
   onIndexChange: (index: number) => void;
   onPagerRef?: (ref: PagerView | null) => void;
+  onOpenSettings?: () => void;
 };
 
 const routes: Href[] = [
@@ -32,6 +33,7 @@ export function PagerTabs({
   currentIndex,
   onIndexChange,
   onPagerRef,
+  onOpenSettings,
 }: PagerTabsProps) {
   const router = useRouter();
   const pagerRef = useRef<PagerView>(null);
@@ -107,7 +109,7 @@ export function PagerTabs({
       onPageScroll={handlePageScroll}
       onPageScrollStateChanged={handleScrollState}
     >
-      <HomeScreen key="home" />
+      <HomeScreen key="home" onOpenSettings={onOpenSettings} />
       <RankScreen key="rank" />
       <ChallengesScreen key="challenges" />
       <SearchScreen key="search" />

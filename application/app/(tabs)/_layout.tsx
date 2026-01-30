@@ -10,6 +10,8 @@ import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { StyleSheet, View } from 'react-native';
 import PagerView from 'react-native-pager-view';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import { runOnJS } from 'react-native-reanimated';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -37,19 +39,37 @@ export default function TabLayout() {
     [routeIndexMap]
   );
 
+  const edgeSwipe = Gesture.Pan()
+    .enabled(currentIndex === 0)
+    .activeOffsetX([20, 9999])
+    .failOffsetX([-9999, -10])
+    .onEnd((event) => {
+      if (event.translationX > 50) {
+        runOnJS(setIsSettingsOpen)(true);
+      }
+    });
+
   return (
     <>
       <DrawerNavigator onOpenSettings={() => setIsSettingsOpen(true)}>
         <View style={StyleSheet.absoluteFill}>
-          <PagerTabs
-            initialIndex={0}
-            currentIndex={currentIndex}
-            onIndexChange={setCurrentIndex}
-            onPagerRef={(ref) => {
-              pagerRef.current = ref;
-            }}
-          />
+        <PagerTabs
+          initialIndex={0}
+          currentIndex={currentIndex}
+          onIndexChange={setCurrentIndex}
+          onPagerRef={(ref) => {
+            pagerRef.current = ref;
+          }}
+          onOpenSettings={() => setIsSettingsOpen(true)}
+        />
         </View>
+        {currentIndex === 0 && (
+          <View pointerEvents="box-none" style={StyleSheet.absoluteFill}>
+            <GestureDetector gesture={edgeSwipe}>
+              <View style={styles.edgeSwipeZone} />
+            </GestureDetector>
+          </View>
+        )}
         <View pointerEvents="box-none" style={StyleSheet.absoluteFill}>
           <Tabs
             screenOptions={{
@@ -160,4 +180,12 @@ export default function TabLayout() {
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  edgeSwipeZone: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    bottom: 0,
+    width: 24,
+  },
+});
