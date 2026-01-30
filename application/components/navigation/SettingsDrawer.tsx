@@ -1,5 +1,5 @@
 import { ThemedText } from '@/components/themed-text';
-import { AppColors } from '@/constants/colors';
+import { AppColors, PaletteName, Palettes } from '@/constants/colors';
 import { useAppTheme } from '@/hooks/useTheme';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useEffect } from 'react';
@@ -17,7 +17,7 @@ type SettingsDrawerProps = {
 };
 
 export function SettingsDrawer({ isOpen, onClose }: SettingsDrawerProps) {
-  const { colors, setMode, mode } = useAppTheme();
+  const { colors, setMode, mode, setPalette, palette } = useAppTheme();
   const translateX = useSharedValue(320);
   const opacity = useSharedValue(0);
 
@@ -41,27 +41,52 @@ export function SettingsDrawer({ isOpen, onClose }: SettingsDrawerProps) {
 
   if (!isOpen && translateX.value === 320) return null;
 
+  const renderColorStrip = (pKey: PaletteName, label: string) => {
+    const pColors = Palettes[pKey][mode === 'system' ? 'light' : mode]; // Preview in current mode
+    const isActive = palette === pKey;
+
+    return (
+      <Pressable
+        key={pKey}
+        onPress={() => setPalette(pKey)}
+        style={[
+          styles.paletteContainer,
+          isActive && { borderColor: colors.primary, borderWidth: 2 },
+        ]}>
+        <ThemedText style={styles.paletteLabel}>{label}</ThemedText>
+        <View style={styles.colorStrip}>
+          <View style={[styles.swatch, { backgroundColor: pColors.background }]} />
+          <View style={[styles.swatch, { backgroundColor: pColors.primary }]} />
+          <View style={[styles.swatch, { backgroundColor: pColors.ring }]} />
+          <View style={[styles.swatch, { backgroundColor: pColors.textMuted }]} />
+        </View>
+      </Pressable>
+    );
+  };
+
   return (
     <>
       {isOpen && <Animated.View style={[styles.backdrop, backdropStyle]} onTouchEnd={onClose} />}
       <Animated.View style={[styles.panel, { backgroundColor: colors.surface }, panelStyle]}>
         <View style={styles.header}>
-          <ThemedText type="subtitle">Settings</ThemedText>
+          <ThemedText type="subtitle">Appearance</ThemedText>
           <Pressable onPress={onClose}>
-            <Ionicons name="close" size={22} color={colors.text} />
+            <Ionicons name="close" size={24} color={colors.text} />
           </Pressable>
         </View>
 
         <View style={styles.section}>
-          <ThemedText style={styles.sectionTitle}>Dual Color Strip</ThemedText>
-          <View style={styles.colorStrip}>
-            <View style={[styles.swatch, { backgroundColor: '#000000' }]} />
-            <View style={[styles.swatch, { backgroundColor: AppColors.dark.primary }]} />
+          <ThemedText style={styles.sectionTitle}>Color Theme</ThemedText>
+          <View style={styles.palettesGrid}>
+            {renderColorStrip('a', 'Nature')}
+            {renderColorStrip('b', 'Ocean')}
+            {renderColorStrip('c', 'Sunset')}
+            {renderColorStrip('d', 'Galaxy')}
           </View>
         </View>
 
         <View style={styles.section}>
-          <ThemedText style={styles.sectionTitle}>Quick Theme</ThemedText>
+          <ThemedText style={styles.sectionTitle}>Display Mode</ThemedText>
           <View style={styles.toggleRow}>
             <Pressable
               onPress={() => setMode('light')}
@@ -78,6 +103,14 @@ export function SettingsDrawer({ isOpen, onClose }: SettingsDrawerProps) {
                 mode === 'dark' && { borderColor: colors.primary, borderWidth: 1 },
               ]}>
               <ThemedText style={styles.modeLabel}>Dark</ThemedText>
+            </Pressable>
+            <Pressable
+              onPress={() => setMode('system')}
+              style={[
+                styles.modeBtn,
+                mode === 'system' && { borderColor: colors.primary, borderWidth: 1 },
+              ]}>
+              <ThemedText style={styles.modeLabel}>System</ThemedText>
             </Pressable>
           </View>
         </View>
@@ -115,36 +148,54 @@ const styles = StyleSheet.create({
   },
   section: {
     gap: 12,
-    marginBottom: 18,
+    marginBottom: 24,
   },
   sectionTitle: {
     fontSize: 12,
     fontWeight: '600',
     textTransform: 'uppercase',
     letterSpacing: 1,
+    opacity: 0.7,
+  },
+  palettesGrid: {
+    gap: 12,
+  },
+  paletteContainer: {
+    padding: 8,
+    borderRadius: 12,
+    backgroundColor: 'rgba(120,120,120,0.05)',
+    borderWidth: 2,
+    borderColor: 'transparent',
+  },
+  paletteLabel: {
+    fontSize: 14,
+    marginBottom: 8,
+    fontWeight: '500',
   },
   colorStrip: {
     flexDirection: 'row',
-    height: 44,
-    borderRadius: 10,
+    height: 32,
+    borderRadius: 6,
     overflow: 'hidden',
-    borderWidth: 1,
-    borderColor: '#333',
   },
   swatch: {
     flex: 1,
   },
   toggleRow: {
     flexDirection: 'row',
-    gap: 12,
+    gap: 8,
   },
   modeBtn: {
+    flex: 1,
+    alignItems: 'center',
     paddingVertical: 10,
-    paddingHorizontal: 18,
     backgroundColor: 'rgba(120,120,120,0.1)',
     borderRadius: 8,
+    borderWidth: 1,
+    borderColor: 'transparent',
   },
   modeLabel: {
     fontSize: 12,
+    fontWeight: '500',
   },
 });
