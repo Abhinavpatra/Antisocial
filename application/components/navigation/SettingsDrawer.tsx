@@ -1,5 +1,5 @@
 import { ThemedText } from '@/components/themed-text';
-import { AppColors, PaletteName, Palettes } from '@/constants/colors';
+import { PaletteName, Palettes } from '@/constants/colors';
 import { useAppTheme } from '@/hooks/useTheme';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useEffect } from 'react';
