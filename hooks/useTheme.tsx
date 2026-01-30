@@ -1,6 +1,6 @@
+import { AppColors, type ThemeName } from '@/constants/colors';
 import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
 import { useColorScheme } from 'react-native';
-import { AppColors, type ThemeName } from '@/constants/colors';
 
 type ThemeMode = ThemeName | 'system';
 
@@ -13,6 +13,7 @@ type ThemeContextValue = {
 };
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
+ThemeContext.displayName = 'ThemeContext';
 
 export function AppThemeProvider({ children }: { children: React.ReactNode }) {
   const systemTheme = (useColorScheme() ?? 'light') as ThemeName;
@@ -42,9 +43,20 @@ export function AppThemeProvider({ children }: { children: React.ReactNode }) {
 }
 
 export function useAppTheme() {
+  const systemTheme = (useColorScheme() ?? 'light') as ThemeName;
   const ctx = useContext(ThemeContext);
+
+  // Fail-soft fallback so the app can boot even if a screen renders outside the provider
+  // (e.g. during route loading or error states).
   if (!ctx) {
-    throw new Error('useAppTheme must be used within AppThemeProvider');
+    return {
+      theme: systemTheme,
+      colors: AppColors[systemTheme],
+      mode: 'system' as ThemeMode,
+      setMode: () => {},
+      toggleTheme: () => {},
+    } satisfies ThemeContextValue;
   }
+
   return ctx;
 }

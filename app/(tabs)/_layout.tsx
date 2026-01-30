@@ -7,6 +7,7 @@ import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
 export default function TabLayout() {
+  console.log('TabLayout rendering');
   const colorScheme = useColorScheme();
 
   return (
