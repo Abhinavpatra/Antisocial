@@ -4,6 +4,9 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 import './global.css'; // just needed to be imported here to work with nativewind
+import { usePermissions } from '@/hooks/usePermissions';
+import { useEffect, useState } from 'react';
+import { Alert, Platform } from 'react-native';
 
 export const unstable_settings = {
   initialRouteName: '(tabs)',
@@ -11,17 +14,38 @@ export const unstable_settings = {
 
 console.log('--- Root _layout.tsx executed ---');
 
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
 export default function RootLayout() {
   console.log('RootLayout rendering');
   return (
-    <AppThemeProvider>
-      <RootNavigation />
-    </AppThemeProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <AppThemeProvider>
+        <RootNavigation />
+      </AppThemeProvider>
+    </GestureHandlerRootView>
   );
 }
 
 function RootNavigation() {
   const { theme } = useAppTheme();
+  const { hasUsageAccess, requestUsageStatsPermission } = usePermissions();
+  const [prompted, setPrompted] = useState(false);
+
+  useEffect(() => {
+    if (Platform.OS === 'android' && !hasUsageAccess && !prompted) {
+      setPrompted(true);
+      Alert.alert(
+        'Permission Required',
+        'To track screen time, please enable Usage Access for this app.',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          { text: 'Open Settings', onPress: requestUsageStatsPermission },
+        ],
+      );
+    }
+  }, [hasUsageAccess, prompted, requestUsageStatsPermission]);
+
   return (
     <ThemeProvider value={theme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
