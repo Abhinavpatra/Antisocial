@@ -33,11 +33,19 @@ export async function GET(req: NextRequest) {
       [userId],
     );
 
+    const settingsRes = await db.query(
+      `select theme_mode, palette, created_at, updated_at
+       from public.user_settings
+       where user_id = $1`,
+      [userId],
+    );
+
     return jsonOk({
       userId,
       profile: profileRes.rows[0] ?? null,
       coins: coinsRes.rows[0]?.coins ?? 0,
       badges: badgesRes.rows,
+      settings: settingsRes.rows[0] ?? null,
     });
   } catch (e) {
     return jsonError(e);
