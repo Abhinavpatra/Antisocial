@@ -2,6 +2,8 @@ import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { Avatar } from '@/components/ui/Avatar';
 import { CoinDisplay } from '@/components/ui/CoinDisplay';
+import { useChallenges } from '@/hooks/useChallenges';
+import { useMe } from '@/hooks/useMe';
 import { useAppTheme } from '@/hooks/useTheme';
 import { FontAwesome5 } from '@expo/vector-icons';
 import React from 'react';
@@ -40,14 +42,45 @@ const trendingCards: TrendingCard[] = [
 
 export function ChallengesScreen() {
   const { colors } = useAppTheme();
+  const { me, refetch: refetchMe } = useMe();
+  const { userId, challenges, actions } = useChallenges();
+
+  const active = challenges.find((c) => c.status === 'active' && c.my_status === 'joined') ?? null;
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ThemedView className="flex-1">
         <ScrollView contentContainerStyle={styles.scrollContent}>
-          <ChallengesHeader />
-          <CurrentFocusCard />
-          <TrendingSection cards={trendingCards} />
+          <ChallengesHeader
+            name={me?.profile?.display_name ?? me?.profile?.username ?? '—'}
+            coins={me?.coins ?? 0}
+            avatarUrl={me?.profile?.avatar_url ?? undefined}
+          />
+          <CurrentFocusCard
+            active={active}
+            onGiveUp={async () => {
+              if (!active) return;
+              await actions.forfeit(active.id);
+              await refetchMe();
+            }}
+            onCheckIn={async () => {
+              if (!active) return;
+              await actions.complete(active.id);
+              await refetchMe();
+            }}
+          />
+          <TrendingSection
+            cards={trendingCards}
+            onAdd={async (card) => {
+              if (!userId) return;
+              await actions.create({
+                title: card.title,
+                description: card.description,
+                coin_reward: Number(card.reward) || 0,
+              });
+              await refetchMe();
+            }}
+          />
           <RequestsSection />
         </ScrollView>
 
@@ -57,7 +90,15 @@ export function ChallengesScreen() {
             { backgroundColor: colors.primary, shadowColor: colors.shadow },
             pressed && styles.fabPressed,
           ]}
-          onPress={() => {}}
+          onPress={async () => {
+            if (!userId) return;
+            await actions.create({
+              title: 'New Challenge',
+              description: 'Custom challenge',
+              coin_reward: 50,
+            });
+            await refetchMe();
+          }}
         >
           <FontAwesome5 name="plus" size={18} color={colors.text} />
         </Pressable>
@@ -66,25 +107,41 @@ export function ChallengesScreen() {
   );
 }
 
-function ChallengesHeader() {
+function ChallengesHeader({
+  name,
+  coins,
+  avatarUrl,
+}: {
+  name: string;
+  coins: number;
+  avatarUrl?: string;
+}) {
   const { colors } = useAppTheme();
 
   return (
     <View style={styles.header}>
       <View style={styles.headerLeft}>
         <View style={[styles.avatarRing, { borderColor: colors.ring }]}>
-          <Avatar size={36} name="Alex Rivera" />
+          <Avatar size={36} name={name} uri={avatarUrl} />
         </View>
         <ThemedText className="text-xl font-semibold">Challenges</ThemedText>
       </View>
       <View style={[styles.coinPill, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}>
-        <CoinDisplay value={1250} />
+        <CoinDisplay value={coins} />
       </View>
     </View>
   );
 }
 
-function CurrentFocusCard() {
+function CurrentFocusCard({
+  active,
+  onGiveUp,
+  onCheckIn,
+}: {
+  active: { title: string; description: string | null } | null;
+  onGiveUp: () => void;
+  onCheckIn: () => void;
+}) {
   const { colors } = useAppTheme();
 
   return (
@@ -105,8 +162,12 @@ function CurrentFocusCard() {
               <FontAwesome5 name="stopwatch" size={18} color={colors.textMuted} />
             </View>
             <View>
-              <ThemedText className="text-lg font-semibold">Social Media Fast</ThemedText>
-              <ThemedText className="text-xs text-textMuted">Digital Detox</ThemedText>
+              <ThemedText className="text-lg font-semibold">
+                {active?.title ?? 'No active challenge'}
+              </ThemedText>
+              <ThemedText className="text-xs text-textMuted">
+                {active?.description ?? 'Start one from Trending below.'}
+              </ThemedText>
             </View>
           </View>
           <View style={[styles.hardPill, { backgroundColor: colors.surface, borderColor: colors.border }]}>
@@ -129,10 +190,18 @@ function CurrentFocusCard() {
         </View>
 
         <View style={styles.focusActions}>
-          <Pressable style={[styles.secondaryButton, { backgroundColor: colors.surface }]}>
+          <Pressable
+            style={[styles.secondaryButton, { backgroundColor: colors.surface }]}
+            onPress={onGiveUp}
+            disabled={!active}
+          >
             <ThemedText className="text-xs text-textMuted">Give Up</ThemedText>
           </Pressable>
-          <Pressable style={[styles.primaryButton, { backgroundColor: colors.primary }]}>
+          <Pressable
+            style={[styles.primaryButton, { backgroundColor: colors.primary }]}
+            onPress={onCheckIn}
+            disabled={!active}
+          >
             <FontAwesome5 name="check-circle" size={14} color={colors.text} />
             <ThemedText className="text-xs font-semibold" style={{ color: colors.text }}>
               Check In
@@ -144,7 +213,13 @@ function CurrentFocusCard() {
   );
 }
 
-function TrendingSection({ cards }: { cards: TrendingCard[] }) {
+function TrendingSection({
+  cards,
+  onAdd,
+}: {
+  cards: TrendingCard[];
+  onAdd: (card: TrendingCard) => void;
+}) {
   const { colors } = useAppTheme();
 
   return (
@@ -171,7 +246,10 @@ function TrendingSection({ cards }: { cards: TrendingCard[] }) {
                   <FontAwesome5 name="coins" size={12} color={colors.primary} />
                   <ThemedText className="text-xs text-textMuted">{card.reward}</ThemedText>
                 </View>
-                <Pressable style={[styles.addButton, { backgroundColor: colors.surface }]}>
+                <Pressable
+                  style={[styles.addButton, { backgroundColor: colors.surface }]}
+                  onPress={() => onAdd(card)}
+                >
                   <FontAwesome5 name="plus" size={12} color={colors.textMuted} />
                 </Pressable>
               </View>

@@ -1,5 +1,8 @@
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
+import { useMe } from '@/hooks/useMe';
+import { useSession } from '@/hooks/useSession';
+import { useSettings } from '@/hooks/useSettings';
 import { useAppTheme } from '@/hooks/useTheme';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
@@ -27,12 +30,20 @@ const initialToggles: AppToggle[] = [
 export default function SettingsScreen() {
   const { colors } = useAppTheme();
   const router = useRouter();
-  const [hideAll, setHideAll] = useState(false);
+  const { userId } = useSession();
+  const { me, refetch: refetchMe } = useMe();
+  const { settings, update } = useSettings();
+
+  const [hideAll, setHideAll] = useState(settings?.hide_all_usage ?? false);
   const [toggles, setToggles] = useState(initialToggles);
 
   const updateToggle = (id: string, enabled: boolean) => {
     setToggles((prev) => prev.map((item) => (item.id === id ? { ...item, enabled } : item)));
   };
+
+  React.useEffect(() => {
+    setHideAll(settings?.hide_all_usage ?? false);
+  }, [settings?.hide_all_usage]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -60,7 +71,43 @@ export default function SettingsScreen() {
               </View>
               <Switch
                 value={hideAll}
-                onValueChange={setHideAll}
+                onValueChange={(val) => {
+                  setHideAll(val);
+                  void update({ hide_all_usage: val });
+                }}
+                trackColor={{ false: colors.surface, true: colors.primary }}
+                thumbColor={colors.surface}
+              />
+            </View>
+          </View>
+
+          <View style={styles.section}>
+            <ThemedText className="text-xs uppercase tracking-widest text-textMuted">
+              Profile Privacy
+            </ThemedText>
+            <View style={[styles.toggleCard, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}>
+              <View style={[styles.iconWrap, { backgroundColor: `${colors.primary}33` }]}>
+                <FontAwesome5 name="user-shield" size={16} color={colors.primary} />
+              </View>
+              <View style={styles.toggleCopy}>
+                <ThemedText className="text-base font-semibold">Private Profile</ThemedText>
+                <ThemedText className="text-xs text-textMuted">Only friends can see your stats</ThemedText>
+              </View>
+              <Switch
+                value={Boolean(me?.profile?.is_private)}
+                onValueChange={(val) => {
+                  if (!userId) return;
+                  void (async () => {
+                    // PATCH /api/me (profile privacy)
+                    const { apiFetch } = await import('@/utils/backend');
+                    await apiFetch<{ profile: unknown }>('/api/me', {
+                      method: 'PATCH',
+                      userId,
+                      body: { is_private: val },
+                    });
+                    await refetchMe();
+                  })();
+                }}
                 trackColor={{ false: colors.surface, true: colors.primary }}
                 thumbColor={colors.surface}
               />
@@ -88,7 +135,13 @@ export default function SettingsScreen() {
                   <View style={styles.rowSpacer} />
                   <Switch
                     value={item.enabled}
-                    onValueChange={(value) => updateToggle(item.id, value)}
+                    onValueChange={(value) => {
+                      updateToggle(item.id, value);
+                      const next = Object.fromEntries(
+                        toggles.map((t) => [t.id, t.id === item.id ? value : t.enabled]),
+                      ) as Record<string, boolean>;
+                      void update({ app_visibility: next });
+                    }}
                     trackColor={{ false: colors.surface, true: colors.primary }}
                     thumbColor={colors.surface}
                   />

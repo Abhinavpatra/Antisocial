@@ -1,4 +1,4 @@
-import { PaletteName, Palettes, ThemeName } from '@/constants/colors';
+import { type PaletteName, Palettes, type ThemeName } from '@/constants/colors';
 import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
 import { useColorScheme } from 'react-native';
 

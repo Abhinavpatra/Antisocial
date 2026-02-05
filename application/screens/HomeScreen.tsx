@@ -6,6 +6,7 @@ import { StatCard } from '@/components/home/StatCard';
 import { SettingsDrawer } from '@/components/navigation/SettingsDrawer';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
+import { useMe } from '@/hooks/useMe';
 import { useAppTheme } from '@/hooks/useTheme';
 import { useUsage } from '@/hooks/useUsage';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -16,6 +17,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 export function HomeScreen() {
   const { colors } = useAppTheme();
   const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
+  const { me } = useMe();
 
   const { formattedTotalTime, totalTime } = useUsage();
 
@@ -27,8 +29,8 @@ export function HomeScreen() {
     <SafeAreaView style={{ flex: 1 }}>
       <ThemedView className="flex-1">
         <HomeHeader
-          name="Alex Rivera"
-          coins={1250}
+          name={me?.profile?.display_name ?? me?.profile?.username ?? '—'}
+          coins={me?.coins ?? 0}
           onLogoPress={() => setIsSettingsOpen(true)}
         />
         <ScrollView contentContainerStyle={styles.scrollContent}>

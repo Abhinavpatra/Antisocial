@@ -1,6 +1,8 @@
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { Avatar } from '@/components/ui/Avatar';
+import { useMe } from '@/hooks/useMe';
+import { useFriends } from '@/hooks/useSocial';
 import { useAppTheme } from '@/hooks/useTheme';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { type Href, useRouter } from 'expo-router';
@@ -13,6 +15,12 @@ const badges = ['Early Bird', 'Night Owl', 'Zen Master', 'Locked'];
 export function ProfileScreen() {
   const { colors } = useAppTheme();
   const router = useRouter();
+  const { me } = useMe();
+  const { friends, incoming } = useFriends();
+
+  const displayName = me?.profile?.display_name ?? me?.profile?.username ?? '—';
+  const username = me?.profile?.username;
+  const avatarUrl = me?.profile?.avatar_url ?? undefined;
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -27,13 +35,15 @@ export function ProfileScreen() {
 
           <View style={styles.profileCard}>
             <View style={[styles.profileRing, { borderColor: colors.ring }]}>
-              <Avatar size={86} name="Alex Morgan" />
+              <Avatar size={86} name={displayName} uri={avatarUrl} />
               <View style={[styles.editBadge, { backgroundColor: colors.primary }]}>
                 <FontAwesome5 name="pen" size={12} color={colors.text} />
               </View>
             </View>
-            <ThemedText className="text-2xl font-bold mt-4">Alex Morgan</ThemedText>
-            <ThemedText className="text-sm text-textMuted">Level 12 • Focus Master</ThemedText>
+            <ThemedText className="text-2xl font-bold mt-4">{displayName}</ThemedText>
+            <ThemedText className="text-sm text-textMuted">
+              {username ? `@${username}` : ' '}
+            </ThemedText>
           </View>
 
           <View style={styles.statsRow}>
@@ -75,7 +85,11 @@ export function ProfileScreen() {
               onPress={() => router.push('/settings' as Href)}
             />
             <ActionRow icon="history" label="Activity History" onPress={() => {}} />
-            <ActionRow icon="user-friends" label="Invite Friends" onPress={() => {}} />
+            <ActionRow
+              icon="user-friends"
+              label={`Friends (${friends.length})${incoming.length ? ` • ${incoming.length} requests` : ''}`}
+              onPress={() => router.push('/search' as Href)}
+            />
           </View>
         </ScrollView>
       </ThemedView>

@@ -1,5 +1,6 @@
 import { ThemedText } from '@/components/themed-text';
-import { PaletteName, Palettes } from '@/constants/colors';
+import { type PaletteName, Palettes } from '@/constants/colors';
+import { useSettings } from '@/hooks/useSettings';
 import { useAppTheme } from '@/hooks/useTheme';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useEffect } from 'react';
@@ -17,7 +18,8 @@ type SettingsDrawerProps = {
 };
 
 export function SettingsDrawer({ isOpen, onClose }: SettingsDrawerProps) {
-  const { colors, setMode, mode, setPalette, palette } = useAppTheme();
+  const { colors, mode } = useAppTheme();
+  const { update, palette } = useSettings();
   const translateX = useSharedValue(-320);
   const opacity = useSharedValue(0);
 
@@ -29,7 +31,7 @@ export function SettingsDrawer({ isOpen, onClose }: SettingsDrawerProps) {
       translateX.value = withTiming(-320, { duration: 260 });
       opacity.value = withTiming(0, { duration: 200 });
     }
-  }, [isOpen]);
+  }, [isOpen, opacity, translateX]);
 
   const panelStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: translateX.value }],
@@ -48,7 +50,7 @@ export function SettingsDrawer({ isOpen, onClose }: SettingsDrawerProps) {
     return (
       <Pressable
         key={pKey}
-        onPress={() => setPalette(pKey)}
+        onPress={() => void update({ palette: pKey })}
         style={[
           styles.paletteContainer,
           isActive && { borderColor: colors.primary, borderWidth: 2 },
@@ -89,7 +91,7 @@ export function SettingsDrawer({ isOpen, onClose }: SettingsDrawerProps) {
           <ThemedText style={styles.sectionTitle}>Display Mode</ThemedText>
           <View style={styles.toggleRow}>
             <Pressable
-              onPress={() => setMode('light')}
+              onPress={() => void update({ theme_mode: 'light' })}
               style={[
                 styles.modeBtn,
                 mode === 'light' && { borderColor: colors.primary, borderWidth: 1 },
@@ -97,7 +99,7 @@ export function SettingsDrawer({ isOpen, onClose }: SettingsDrawerProps) {
               <ThemedText style={styles.modeLabel}>Light</ThemedText>
             </Pressable>
             <Pressable
-              onPress={() => setMode('dark')}
+              onPress={() => void update({ theme_mode: 'dark' })}
               style={[
                 styles.modeBtn,
                 mode === 'dark' && { borderColor: colors.primary, borderWidth: 1 },
@@ -105,7 +107,7 @@ export function SettingsDrawer({ isOpen, onClose }: SettingsDrawerProps) {
               <ThemedText style={styles.modeLabel}>Dark</ThemedText>
             </Pressable>
             <Pressable
-              onPress={() => setMode('system')}
+              onPress={() => void update({ theme_mode: 'system' })}
               style={[
                 styles.modeBtn,
                 mode === 'system' && { borderColor: colors.primary, borderWidth: 1 },

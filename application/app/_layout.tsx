@@ -1,23 +1,19 @@
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { usePermissions } from '@/hooks/usePermissions';
 import { AppThemeProvider, useAppTheme } from '@/hooks/useTheme';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import React, { useEffect, useState } from 'react';
+import { Alert, Platform } from 'react-native';
 import 'react-native-reanimated';
 import './global.css'; // just needed to be imported here to work with nativewind
-import { usePermissions } from '@/hooks/usePermissions';
-import { useEffect, useState } from 'react';
-import { Alert, Platform } from 'react-native';
 
 export const unstable_settings = {
   initialRouteName: '(tabs)',
 };
 
-console.log('--- Root _layout.tsx executed ---');
-
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-
 export default function RootLayout() {
-  console.log('RootLayout rendering');
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <AppThemeProvider>

@@ -28,6 +28,8 @@ create table if not exists public.user_settings (
   user_id uuid primary key references public.users (id) on delete cascade,
   theme_mode text not null default 'system' check (theme_mode in ('system', 'light', 'dark')),
   palette text not null default 'a' check (palette in ('a', 'b', 'c', 'd')),
+  hide_all_usage boolean not null default false,
+  app_visibility jsonb not null default '{}'::jsonb,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -146,3 +148,10 @@ create table if not exists public.coins_ledger (
 create index if not exists coins_ledger_user_created_idx
   on public.coins_ledger (user_id, created_at desc);
 
+-- Prevent double-awarding for the same referenced event (when ref_type/ref_id are set)
+create unique index if not exists coins_ledger_unique_ref
+  on public.coins_ledger (user_id, ref_type, ref_id)
+  where ref_type is not null and ref_id is not null;
+
+create index if not exists challenge_participants_user_idx
+  on public.challenge_participants (user_id, status);

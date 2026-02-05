@@ -1,6 +1,7 @@
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { Avatar } from '@/components/ui/Avatar';
+import { useFriends, useUserSearch } from '@/hooks/useSocial';
 import { useAppTheme } from '@/hooks/useTheme';
 import { FontAwesome5 } from '@expo/vector-icons';
 import React from 'react';
@@ -14,6 +15,16 @@ type SuggestedFriend = {
   status: 'add' | 'cancel';
 };
 
+type SearchUserRow = {
+  user_id: string;
+  id?: string;
+  username?: string | null;
+  display_name?: string | null;
+  avatar_url?: string | null;
+  subtitle?: string;
+  status?: 'add' | 'cancel';
+};
+
 const suggestedFriends: SuggestedFriend[] = [
   { id: 'alex_tracker', username: 'alex_tracker', subtitle: 'Mutual friend with @jess_run', status: 'add' },
   { id: 'sarah_games', username: 'sarah_games', subtitle: 'Top 10 this week', status: 'cancel' },
@@ -23,6 +34,10 @@ const suggestedFriends: SuggestedFriend[] = [
 
 export function SearchScreen() {
   const { colors } = useAppTheme();
+  const { results, setQuery, query } = useUserSearch();
+  const { incoming, outgoing, actions } = useFriends();
+
+  const pendingCount = incoming.length + outgoing.length;
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -43,6 +58,8 @@ export function SearchScreen() {
                 placeholder="Search by username"
                 placeholderTextColor={colors.textMuted}
                 style={[styles.searchInput, { color: colors.text }]}
+                value={query}
+                onChangeText={setQuery}
               />
             </View>
           </View>
@@ -63,7 +80,7 @@ export function SearchScreen() {
               <View style={styles.pendingRight}>
                 <View style={[styles.pendingBadge, { backgroundColor: colors.primary }]}>
                   <ThemedText className="text-xs font-bold" style={{ color: colors.text }}>
-                    3
+                    {pendingCount}
                   </ThemedText>
                 </View>
                 <FontAwesome5 name="chevron-right" size={12} color={colors.primary} />
@@ -79,32 +96,45 @@ export function SearchScreen() {
           </View>
 
           <View style={styles.list}>
-            {suggestedFriends.map((friend) => (
+            {(results.length
+              ? (results as unknown as SearchUserRow[])
+              : (suggestedFriends.map((f) => ({ ...f, user_id: f.id })) as SearchUserRow[])
+            ).map((friend) => (
               <View
-                key={friend.id}
+                key={friend.user_id ?? friend.id}
                 style={[styles.friendCard, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}
               >
                 <View style={styles.friendAvatar}>
-                  <Avatar size={44} name={friend.username} />
+                  <Avatar size={44} name={friend.username ?? friend.id} />
                   {friend.id === 'alex_tracker' ? <View style={styles.onlineDot} /> : null}
                 </View>
                 <View style={styles.friendInfo}>
-                  <ThemedText className="text-base font-semibold">{friend.username}</ThemedText>
-                  <ThemedText className="text-xs text-textMuted">{friend.subtitle}</ThemedText>
+                  <ThemedText className="text-base font-semibold">
+                    {friend.username ?? friend.id}
+                  </ThemedText>
+                  <ThemedText className="text-xs text-textMuted">
+                    {friend.subtitle ?? friend.display_name ?? ''}
+                  </ThemedText>
                 </View>
                 <Pressable
                   style={[
                     styles.friendAction,
-                    friend.status === 'add'
+                    friend.status === 'add' || results.length
                       ? { backgroundColor: colors.primary }
                       : { borderColor: colors.primary, borderWidth: 1 },
                   ]}
+                  onPress={() => {
+                    const targetUserId = friend.user_id ?? friend.id;
+                    if (targetUserId) void actions.request(String(targetUserId));
+                  }}
                 >
                   <ThemedText
                     className="text-sm font-semibold"
-                    style={{ color: friend.status === 'add' ? colors.text : colors.primary }}
+                    style={{
+                      color: friend.status === 'add' || results.length ? colors.text : colors.primary,
+                    }}
                   >
-                    {friend.status === 'add' ? 'Add' : 'Cancel'}
+                    {friend.status === 'add' || results.length ? 'Add' : 'Cancel'}
                   </ThemedText>
                 </Pressable>
               </View>

@@ -30,7 +30,7 @@ export function SidePanel({ isOpen, onClose }: SidePanelProps) {
       translateX.value = withTiming(-300, { duration: 300 });
       opacity.value = withTiming(0);
     }
-  }, [isOpen]);
+  }, [isOpen, opacity, translateX]);
 
   const panelStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: translateX.value }],

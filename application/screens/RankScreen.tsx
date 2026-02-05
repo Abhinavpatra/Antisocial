@@ -1,6 +1,7 @@
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { Avatar } from '@/components/ui/Avatar';
+import { useLeaderboard } from '@/hooks/useSocial';
 import { useAppTheme } from '@/hooks/useTheme';
 import { FontAwesome5 } from '@expo/vector-icons';
 import React from 'react';
@@ -36,14 +37,29 @@ const othersData: LeaderboardEntry[] = [
 ];
 
 export function RankScreen() {
+  const { rows, scope, setScope } = useLeaderboard();
+
+  const podium = rows.slice(0, 3).map((r, idx) => ({
+    rank: idx + 1,
+    name: r.display_name ?? r.username ?? '—',
+    score: formatScore(r.total_duration_ms),
+  }));
+
+  const others = rows.slice(3).map((r, idx) => ({
+    rank: idx + 4,
+    name: r.display_name ?? r.username ?? '—',
+    handle: r.username ? `@${r.username}` : undefined,
+    score: formatScore(r.total_duration_ms),
+  }));
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ThemedView className="flex-1">
         <ScrollView contentContainerStyle={styles.scrollContent}>
           <LeaderboardHeader />
-          <SegmentedSwitch />
-          <PodiumRow entries={podiumData} />
-          <LeaderboardList entries={othersData} />
+          <SegmentedSwitch scope={scope} setScope={setScope} />
+          <PodiumRow entries={podium.length ? podium : podiumData} />
+          <LeaderboardList entries={others.length ? others : othersData} />
         </ScrollView>
       </ThemedView>
     </SafeAreaView>
@@ -63,21 +79,48 @@ function LeaderboardHeader() {
   );
 }
 
-function SegmentedSwitch() {
+function SegmentedSwitch({
+  scope,
+  setScope,
+}: {
+  scope: 'friends' | 'global';
+  setScope: (s: 'friends' | 'global') => void;
+}) {
   const { colors } = useAppTheme();
 
   return (
     <View style={[styles.switchWrap, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-      <Pressable style={[styles.switchButton, { backgroundColor: colors.text }]}>
-        <ThemedText style={{ color: colors.surface }} className="text-sm font-semibold">
+      <Pressable
+        style={[styles.switchButton, scope === 'friends' && { backgroundColor: colors.text }]}
+        onPress={() => setScope('friends')}
+      >
+        <ThemedText
+          style={{ color: scope === 'friends' ? colors.surface : colors.textMuted }}
+          className="text-sm font-semibold"
+        >
           Friends
         </ThemedText>
       </Pressable>
-      <Pressable style={styles.switchButton}>
-        <ThemedText className="text-sm text-textMuted">Global</ThemedText>
+      <Pressable
+        style={[styles.switchButton, scope === 'global' && { backgroundColor: colors.text }]}
+        onPress={() => setScope('global')}
+      >
+        <ThemedText
+          className="text-sm font-semibold"
+          style={{ color: scope === 'global' ? colors.surface : colors.textMuted }}
+        >
+          Global
+        </ThemedText>
       </Pressable>
     </View>
   );
+}
+
+function formatScore(ms: number) {
+  const hours = Math.floor(ms / (1000 * 60 * 60));
+  const minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
+  if (hours <= 0) return `${minutes}m`;
+  return `${hours}h ${minutes}m`;
 }
 
 function PodiumRow({ entries }: { entries: PodiumEntry[] }) {
