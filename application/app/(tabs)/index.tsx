@@ -1,3 +1,5 @@
+import { HomeScreen } from '@/screens/HomeScreen';
+
 export default function HomeTab() {
-  return null;
+  return <HomeScreen />;
 }

@@ -1,3 +1,5 @@
+import { SearchScreen } from '@/screens/SearchScreen';
+
 export default function SearchTab() {
-  return null;
+  return <SearchScreen />;
 }

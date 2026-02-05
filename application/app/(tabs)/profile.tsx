@@ -1,3 +1,5 @@
+import { ProfileScreen } from '@/screens/ProfileScreen';
+
 export default function ProfileTab() {
-  return null;
+  return <ProfileScreen />;
 }

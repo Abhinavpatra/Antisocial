@@ -10,8 +10,6 @@ import { useUsage } from '@/hooks/useUsage';
 import { FontAwesome5 } from '@expo/vector-icons';
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { Gesture, GestureDetector } from 'react-native-gesture-handler';
-import { runOnJS } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 type HomeScreenProps = {
@@ -27,25 +25,14 @@ export function HomeScreen({ onOpenSettings }: HomeScreenProps) {
   const dailyGoal = 6 * 60 * 60 * 1000;
   const progress = Math.min(totalTime / dailyGoal, 1);
 
-  const swipeToOpen = Gesture.Pan()
-    .enabled(Boolean(onOpenSettings))
-    .activeOffsetX([20, 9999])
-    .failOffsetX([-9999, -10])
-    .onEnd((event) => {
-      if (event.translationX > 50 && onOpenSettings) {
-        runOnJS(onOpenSettings)();
-      }
-    });
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <GestureDetector gesture={swipeToOpen}>
-        <ThemedView className="flex-1">
-          <HomeHeader name="Alex Rivera" coins={1250} onLogoPress={onOpenSettings} />
-          <ScrollView contentContainerStyle={styles.scrollContent}>
-            <View style={styles.section}>
-              <FocusSummaryRing progress={progress} timeLabel={formattedTotalTime} />
-            </View>
+      <ThemedView className="flex-1">
+        <HomeHeader name="Alex Rivera" coins={1250} onLogoPress={onOpenSettings} />
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+          <View style={styles.section}>
+            <FocusSummaryRing progress={progress} timeLabel={formattedTotalTime} />
+          </View>
 
           <View style={[styles.section, styles.statsRow]}>
             <StatCard
@@ -81,7 +68,8 @@ export function HomeScreen({ onOpenSettings }: HomeScreenProps) {
           <View style={styles.section}>
             <ThemedText
               style={styles.sectionTitle}
-              className="text-xs uppercase tracking-widest text-textMuted">
+              className="text-xs uppercase tracking-widest text-textMuted"
+            >
               Today&apos;s Progress
             </ThemedText>
             <View style={styles.progressList}>
@@ -99,9 +87,8 @@ export function HomeScreen({ onOpenSettings }: HomeScreenProps) {
               />
             </View>
           </View>
-          </ScrollView>
-        </ThemedView>
-      </GestureDetector>
+        </ScrollView>
+      </ThemedView>
     </SafeAreaView>
   );
 }
