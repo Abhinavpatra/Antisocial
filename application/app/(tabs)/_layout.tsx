@@ -1,8 +1,6 @@
 import { Tabs } from 'expo-router';
-import React, { useState } from 'react';
 
 import { HapticTab } from '@/components/haptic-tab';
-import { SettingsDrawer } from '@/components/navigation/SettingsDrawer';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
@@ -10,7 +8,6 @@ import { StyleSheet, View } from 'react-native';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   return (
     <>
@@ -44,7 +41,6 @@ export default function TabLayout() {
             title: 'Home',
             tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
           }}
-          initialParams={{ onOpenSettings: () => setIsSettingsOpen(true) }}
         />
         <Tabs.Screen
           name="rank"
@@ -75,7 +71,6 @@ export default function TabLayout() {
           }}
         />
       </Tabs>
-      <SettingsDrawer isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
     </>
   );
 }

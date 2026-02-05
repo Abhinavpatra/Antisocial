@@ -3,6 +3,7 @@ import { FocusSummaryRing } from '@/components/home/FocusSummaryRing';
 import { HomeHeader } from '@/components/home/HomeHeader';
 import { ProgressRow } from '@/components/home/ProgressRow';
 import { StatCard } from '@/components/home/StatCard';
+import { SettingsDrawer } from '@/components/navigation/SettingsDrawer';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { useAppTheme } from '@/hooks/useTheme';
@@ -12,12 +13,9 @@ import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-type HomeScreenProps = {
-  onOpenSettings?: () => void;
-};
-
-export function HomeScreen({ onOpenSettings }: HomeScreenProps) {
+export function HomeScreen() {
   const { colors } = useAppTheme();
+  const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
 
   const { formattedTotalTime, totalTime } = useUsage();
 
@@ -28,7 +26,11 @@ export function HomeScreen({ onOpenSettings }: HomeScreenProps) {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ThemedView className="flex-1">
-        <HomeHeader name="Alex Rivera" coins={1250} onLogoPress={onOpenSettings} />
+        <HomeHeader
+          name="Alex Rivera"
+          coins={1250}
+          onLogoPress={() => setIsSettingsOpen(true)}
+        />
         <ScrollView contentContainerStyle={styles.scrollContent}>
           <View style={styles.section}>
             <FocusSummaryRing progress={progress} timeLabel={formattedTotalTime} />
@@ -89,6 +91,7 @@ export function HomeScreen({ onOpenSettings }: HomeScreenProps) {
           </View>
         </ScrollView>
       </ThemedView>
+      <SettingsDrawer isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
     </SafeAreaView>
   );
 }
