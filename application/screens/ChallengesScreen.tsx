@@ -2,6 +2,7 @@ import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { Avatar } from '@/components/ui/Avatar';
 import { CoinDisplay } from '@/components/ui/CoinDisplay';
+import { NetworkErrorView } from '@/components/ui/NetworkErrorView';
 import { useChallenges } from '@/hooks/useChallenges';
 import { useMe } from '@/hooks/useMe';
 import { useAppTheme } from '@/hooks/useTheme';
@@ -43,9 +44,24 @@ const trendingCards: TrendingCard[] = [
 export function ChallengesScreen() {
   const { colors } = useAppTheme();
   const { me, refetch: refetchMe } = useMe();
-  const { userId, challenges, actions } = useChallenges();
+  const { userId, challenges, actions, networkError, refetch, isLoading } = useChallenges();
 
   const active = challenges.find((c) => c.status === 'active' && c.my_status === 'joined') ?? null;
+
+  if (networkError && challenges.length === 0 && !isLoading) {
+    return (
+      <SafeAreaView style={{ flex: 1 }}>
+        <ThemedView className="flex-1">
+          <ChallengesHeader
+            name={me?.profile?.display_name ?? me?.profile?.username ?? '—'}
+            coins={me?.coins ?? 0}
+            avatarUrl={me?.profile?.avatar_url ?? undefined}
+          />
+          <NetworkErrorView onRetry={refetch} />
+        </ThemedView>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

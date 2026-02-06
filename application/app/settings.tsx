@@ -98,14 +98,18 @@ export default function SettingsScreen() {
                 onValueChange={(val) => {
                   if (!userId) return;
                   void (async () => {
-                    // PATCH /api/me (profile privacy)
-                    const { apiFetch } = await import('@/utils/backend');
-                    await apiFetch<{ profile: unknown }>('/api/me', {
-                      method: 'PATCH',
-                      userId,
-                      body: { is_private: val },
-                    });
-                    await refetchMe();
+                    try {
+                      // PATCH /api/me (profile privacy)
+                      const { apiFetch } = await import('@/utils/backend');
+                      await apiFetch<{ profile: unknown }>('/api/me', {
+                        method: 'PATCH',
+                        userId,
+                        body: { is_private: val },
+                      });
+                      await refetchMe();
+                    } catch {
+                      // Network error – ignore silently, setting stays local
+                    }
                   })();
                 }}
                 trackColor={{ false: colors.surface, true: colors.primary }}

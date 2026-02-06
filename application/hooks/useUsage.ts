@@ -18,36 +18,39 @@ export function useUsage() {
   const loadData = async () => {
     setLoading(true);
     try {
-      // 1) Get device stats (currently mocked)
+      // 1) Always get device stats first (native or mock fallback)
       const stats = await UsageStatsService.getStats('day');
       setUsageStats(stats);
       const localTotal = UsageStatsService.getTotalUsageTime(stats);
+      setTotalTime(localTotal);
 
-      // 2) Best-effort: push sessions to backend (idempotency handled server-side only for coins;
-      // for usage we keep it simple for now and just append).
+      // 2) Best-effort backend sync – failures are silently caught
       if (userId) {
-        const now = Date.now();
-        await Promise.all(
-          stats.map((s) =>
-            postUsageSession({
-              userId,
-              app_package: s.packageName,
-              started_at: new Date(now - s.totalTimeInForeground).toISOString(),
-              ended_at: new Date(now).toISOString(),
-              duration_ms: s.totalTimeInForeground,
-            }),
-          ),
-        );
+        try {
+          const now = Date.now();
+          await Promise.all(
+            stats.map((s) =>
+              postUsageSession({
+                userId,
+                app_package: s.packageName,
+                started_at: new Date(now - s.totalTimeInForeground).toISOString(),
+                ended_at: new Date(now).toISOString(),
+                duration_ms: s.totalTimeInForeground,
+              }),
+            ),
+          );
 
-        // 3) Prefer backend summary if available (this becomes the real source of truth once
-        // native usage stats are wired).
-        const summary = await getUsageSummary({ userId, range: 'day' });
-        setTotalTime(summary.totalDurationMs ?? localTotal);
-      } else {
-        setTotalTime(localTotal);
+          // Prefer backend summary when available (source of truth for leaderboard)
+          const summary = await getUsageSummary({ userId, range: 'day' });
+          if (summary.totalDurationMs > 0) {
+            setTotalTime(summary.totalDurationMs);
+          }
+        } catch {
+          // Backend unreachable – keep local total, don't disrupt UI
+        }
       }
     } catch (e) {
-      console.error(e);
+      console.error('[useUsage] Error loading data:', e);
     } finally {
       setLoading(false);
     }

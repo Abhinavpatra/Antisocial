@@ -4,6 +4,7 @@ import React from 'react';
 import { type PaletteName } from '@/constants/colors';
 import { useAppTheme } from '@/hooks/useTheme';
 import { getSettings, patchSettings, type UserSettings } from '@/services/settingsApi';
+import { isNetworkError } from '@/utils/backend';
 import { useSession } from './useSession';
 
 const CACHE_KEY = 'timerapp.userSettings';
@@ -32,6 +33,7 @@ export function useSettings() {
 
   const [settings, setSettings] = React.useState<UserSettings | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [networkError, setNetworkError] = React.useState(false);
 
   // fast local hydrate
   React.useEffect(() => {
@@ -58,6 +60,12 @@ export function useSettings() {
         setPalette(res.settings.palette);
         await writeCachedSettings(res.settings);
       }
+      setNetworkError(false);
+    } catch (e) {
+      if (isNetworkError(e)) {
+        setNetworkError(true);
+      }
+      // Keep using cached settings – don't clear them
     } finally {
       setIsLoading(false);
     }
@@ -75,10 +83,19 @@ export function useSettings() {
       if (patch.theme_mode) setMode(patch.theme_mode);
       if (patch.palette) setPalette(patch.palette);
 
-      const res = await patchSettings({ userId, patch });
-      setSettings(res.settings);
-      await writeCachedSettings(res.settings);
-      return res.settings;
+      try {
+        const res = await patchSettings({ userId, patch });
+        setSettings(res.settings);
+        await writeCachedSettings(res.settings);
+        setNetworkError(false);
+        return res.settings;
+      } catch (e) {
+        if (isNetworkError(e)) {
+          setNetworkError(true);
+        }
+        // Optimistic UI stays – user already sees the change locally
+        return null;
+      }
     },
     [setMode, setPalette, userId],
   );
@@ -89,8 +106,8 @@ export function useSettings() {
     mode,
     palette,
     isLoading,
+    networkError,
     refetch,
     update,
   };
 }
-

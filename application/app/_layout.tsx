@@ -4,8 +4,8 @@ import { AppThemeProvider, useAppTheme } from '@/hooks/useTheme';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState } from 'react';
-import { Alert, Platform } from 'react-native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Alert, AppState, type AppStateStatus, Platform } from 'react-native';
 import 'react-native-reanimated';
 import './global.css'; // just needed to be imported here to work with nativewind
 
@@ -25,18 +25,36 @@ export default function RootLayout() {
 
 function RootNavigation() {
   const { theme } = useAppTheme();
-  const { hasUsageAccess, requestUsageStatsPermission } = usePermissions();
+  const { hasUsageAccess, requestUsageStatsPermission, recheckPermissions } = usePermissions();
   const [prompted, setPrompted] = useState(false);
+  const appState = useRef(AppState.currentState);
 
+  // Re-check permissions when returning from system Settings
+  const handleAppStateChange = useCallback(
+    (nextState: AppStateStatus) => {
+      if (appState.current.match(/inactive|background/) && nextState === 'active') {
+        void recheckPermissions();
+      }
+      appState.current = nextState;
+    },
+    [recheckPermissions],
+  );
+
+  useEffect(() => {
+    const sub = AppState.addEventListener('change', handleAppStateChange);
+    return () => sub.remove();
+  }, [handleAppStateChange]);
+
+  // Prompt once if usage access is missing
   useEffect(() => {
     if (Platform.OS === 'android' && !hasUsageAccess && !prompted) {
       setPrompted(true);
       Alert.alert(
-        'Permission Required',
-        'To track screen time, please enable Usage Access for this app.',
+        'Usage Access Required',
+        'To track your screen time accurately, please enable Usage Access for TimerApp in the next screen.',
         [
-          { text: 'Cancel', style: 'cancel' },
-          { text: 'Open Settings', onPress: requestUsageStatsPermission },
+          { text: 'Later', style: 'cancel' },
+          { text: 'Open Settings', onPress: () => void requestUsageStatsPermission() },
         ],
       );
     }

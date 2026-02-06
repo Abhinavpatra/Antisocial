@@ -1,6 +1,7 @@
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { Avatar } from '@/components/ui/Avatar';
+import { NetworkErrorView } from '@/components/ui/NetworkErrorView';
 import { useFriends, useUserSearch } from '@/hooks/useSocial';
 import { useAppTheme } from '@/hooks/useTheme';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -34,10 +35,28 @@ const suggestedFriends: SuggestedFriend[] = [
 
 export function SearchScreen() {
   const { colors } = useAppTheme();
-  const { results, setQuery, query } = useUserSearch();
-  const { incoming, outgoing, actions } = useFriends();
+  const { results, setQuery, query, networkError: searchNetworkError } = useUserSearch();
+  const { incoming, outgoing, actions, networkError: friendsNetworkError, refetch: refetchFriends } = useFriends();
 
   const pendingCount = incoming.length + outgoing.length;
+  const isOffline = searchNetworkError || friendsNetworkError;
+
+  if (isOffline && results.length === 0) {
+    return (
+      <SafeAreaView style={{ flex: 1 }}>
+        <ThemedView className="flex-1">
+          <View style={styles.header}>
+            <Pressable style={styles.headerIcon}>
+              <FontAwesome5 name="arrow-left" size={18} color={colors.text} />
+            </Pressable>
+            <ThemedText className="text-lg font-bold">Find Friends</ThemedText>
+            <View style={styles.headerSpacer} />
+          </View>
+          <NetworkErrorView onRetry={refetchFriends} />
+        </ThemedView>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

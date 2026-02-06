@@ -1,6 +1,7 @@
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { Avatar } from '@/components/ui/Avatar';
+import { NetworkErrorView } from '@/components/ui/NetworkErrorView';
 import { useMe } from '@/hooks/useMe';
 import { useFriends } from '@/hooks/useSocial';
 import { useAppTheme } from '@/hooks/useTheme';
@@ -15,12 +16,28 @@ const badges = ['Early Bird', 'Night Owl', 'Zen Master', 'Locked'];
 export function ProfileScreen() {
   const { colors } = useAppTheme();
   const router = useRouter();
-  const { me } = useMe();
+  const { me, networkError: meNetworkError, refetch: refetchMe } = useMe();
   const { friends, incoming } = useFriends();
 
   const displayName = me?.profile?.display_name ?? me?.profile?.username ?? '—';
   const username = me?.profile?.username;
   const avatarUrl = me?.profile?.avatar_url ?? undefined;
+
+  if (meNetworkError && !me) {
+    return (
+      <SafeAreaView style={{ flex: 1 }}>
+        <ThemedView className="flex-1">
+          <View style={styles.header}>
+            <ThemedText className="text-xl font-semibold">My Profile</ThemedText>
+            <Pressable style={styles.settingsIcon} onPress={() => router.push('/settings' as Href)}>
+              <FontAwesome5 name="cog" size={18} color={colors.text} />
+            </Pressable>
+          </View>
+          <NetworkErrorView onRetry={refetchMe} />
+        </ThemedView>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

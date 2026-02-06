@@ -1,6 +1,7 @@
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { Avatar } from '@/components/ui/Avatar';
+import { NetworkErrorView } from '@/components/ui/NetworkErrorView';
 import { useLeaderboard } from '@/hooks/useSocial';
 import { useAppTheme } from '@/hooks/useTheme';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -37,7 +38,18 @@ const othersData: LeaderboardEntry[] = [
 ];
 
 export function RankScreen() {
-  const { rows, scope, setScope } = useLeaderboard();
+  const { rows, scope, setScope, networkError, refetch, isLoading } = useLeaderboard();
+
+  if (networkError && rows.length === 0 && !isLoading) {
+    return (
+      <SafeAreaView style={{ flex: 1 }}>
+        <ThemedView className="flex-1">
+          <LeaderboardHeader />
+          <NetworkErrorView onRetry={refetch} />
+        </ThemedView>
+      </SafeAreaView>
+    );
+  }
 
   const podium = rows.slice(0, 3).map((r, idx) => ({
     rank: idx + 1,

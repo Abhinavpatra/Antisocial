@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { apiFetch } from '@/utils/backend';
+import { apiFetch, isNetworkError } from '@/utils/backend';
 import { useSession } from './useSession';
 
 export type MePayload = {
@@ -36,6 +36,7 @@ export function useMe() {
   const [me, setMe] = React.useState<MePayload | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState<Error | null>(null);
+  const [networkError, setNetworkError] = React.useState(false);
 
   const load = React.useCallback(async () => {
     if (!userId) return;
@@ -44,7 +45,11 @@ export function useMe() {
       const data = await apiFetch<MePayload>('/api/me', { userId });
       setMe(data);
       setError(null);
+      setNetworkError(false);
     } catch (e) {
+      if (isNetworkError(e)) {
+        setNetworkError(true);
+      }
       setError(e as Error);
     } finally {
       setIsLoading(false);
@@ -60,6 +65,7 @@ export function useMe() {
     me,
     isLoading: isSessionLoading || isLoading,
     error: sessionError ?? error,
+    networkError,
     refetch: load,
   };
 }
