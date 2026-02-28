@@ -35,7 +35,7 @@ class UsageStatsModule : Module() {
             if (activity != null) {
                 activity.startActivity(intent)
             } else {
-                val ctx = appContext.reactContext ?: return@AsyncFunction
+                val ctx = appContext.reactContext ?: return@AsyncFunction null
                 ctx.startActivity(intent)
             }
         }
