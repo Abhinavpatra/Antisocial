@@ -2,9 +2,11 @@ import React from 'react';
 
 import {
   type ChallengeRow,
+  type TrendingChallenge,
   completeChallenge,
   createChallenge,
   forfeitChallenge,
+  getTrendingChallenges,
   joinChallenge,
   listChallenges,
 } from '@/services/challengesApi';
@@ -14,6 +16,7 @@ import { useSession } from './useSession';
 export function useChallenges() {
   const { userId } = useSession();
   const [challenges, setChallenges] = React.useState<ChallengeRow[]>([]);
+  const [trending, setTrending] = React.useState<TrendingChallenge[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState<Error | null>(null);
   const [networkError, setNetworkError] = React.useState(false);
@@ -22,8 +25,12 @@ export function useChallenges() {
     if (!userId) return;
     setIsLoading(true);
     try {
-      const data = await listChallenges({ userId, limit: 50 });
-      setChallenges(data.challenges);
+      const [challengesData, trendingData] = await Promise.all([
+        listChallenges({ userId, limit: 50 }),
+        getTrendingChallenges({ userId, limit: 10 }),
+      ]);
+      setChallenges(challengesData.challenges);
+      setTrending(trendingData.trending);
       setError(null);
       setNetworkError(false);
     } catch (e) {
@@ -94,5 +101,5 @@ export function useChallenges() {
     [refetch, userId],
   );
 
-  return { userId, challenges, isLoading, error, networkError, refetch, actions };
+  return { userId, challenges, trending, isLoading, error, networkError, refetch, actions };
 }

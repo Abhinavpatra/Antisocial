@@ -4,11 +4,13 @@ import { isNetworkError } from '@/utils/backend';
 import { useSession } from './useSession';
 import {
   getFriendRequests,
+  getFriendSuggestions,
   getFriends,
   getLeaderboard,
   requestFriend,
   respondToFriendRequest,
   searchUsers,
+  type FriendSuggestion,
   type LeaderboardRow,
   type PublicProfile,
 } from '@/services/socialApi';
@@ -150,4 +152,33 @@ export function useLeaderboard() {
   }, [userId, refetch]);
 
   return { userId, scope, setScope, range, setRange, rows, isLoading, networkError, refetch };
+}
+
+export function useFriendSuggestions() {
+  const { userId } = useSession();
+  const [suggestions, setSuggestions] = React.useState<FriendSuggestion[]>([]);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [networkError, setNetworkError] = React.useState(false);
+
+  const refetch = React.useCallback(async () => {
+    if (!userId) return;
+    setIsLoading(true);
+    try {
+      const data = await getFriendSuggestions({ userId, limit: 10 });
+      setSuggestions(data.suggestions);
+      setNetworkError(false);
+    } catch (e) {
+      if (isNetworkError(e)) {
+        setNetworkError(true);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  }, [userId]);
+
+  React.useEffect(() => {
+    if (userId) void refetch();
+  }, [userId, refetch]);
+
+  return { userId, suggestions, isLoading, networkError, refetch };
 }

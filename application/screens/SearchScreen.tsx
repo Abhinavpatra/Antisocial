@@ -2,19 +2,12 @@ import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { Avatar } from '@/components/ui/Avatar';
 import { NetworkErrorView } from '@/components/ui/NetworkErrorView';
-import { useFriends, useUserSearch } from '@/hooks/useSocial';
+import { useFriendSuggestions, useFriends, useUserSearch } from '@/hooks/useSocial';
 import { useAppTheme } from '@/hooks/useTheme';
 import { FontAwesome5 } from '@expo/vector-icons';
 import React from 'react';
 import { Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
-type SuggestedFriend = {
-  id: string;
-  username: string;
-  subtitle: string;
-  status: 'add' | 'cancel';
-};
 
 type SearchUserRow = {
   user_id: string;
@@ -24,35 +17,36 @@ type SearchUserRow = {
   avatar_url?: string | null;
   subtitle?: string;
   status?: 'add' | 'cancel';
+  mutual_friends_count?: number;
 };
-
-const suggestedFriends: SuggestedFriend[] = [
-  { id: 'alex_tracker', username: 'alex_tracker', subtitle: 'Mutual friend with @jess_run', status: 'add' },
-  { id: 'sarah_games', username: 'sarah_games', subtitle: 'Top 10 this week', status: 'cancel' },
-  { id: 'mike_flow', username: 'mike_flow', subtitle: 'New to platform', status: 'add' },
-  { id: 'david_pixel', username: 'david_pixel', subtitle: 'Mutual friend with @alex_tracker', status: 'add' },
-];
 
 export function SearchScreen() {
   const { colors } = useAppTheme();
   const { results, setQuery, query, networkError: searchNetworkError } = useUserSearch();
   const { incoming, outgoing, actions, networkError: friendsNetworkError, refetch: refetchFriends } = useFriends();
+  const { suggestions, refetch: refetchSuggestions } = useFriendSuggestions();
 
   const pendingCount = incoming.length + outgoing.length;
   const isOffline = searchNetworkError || friendsNetworkError;
+
+  // Convert API suggestions to display format
+  const suggestedFriends: SearchUserRow[] = suggestions.map((s) => ({
+    user_id: s.user_id,
+    username: s.username,
+    display_name: s.display_name,
+    avatar_url: s.avatar_url,
+    subtitle: s.mutual_friends_count > 0 
+      ? `${s.mutual_friends_count} mutual friend${s.mutual_friends_count !== 1 ? 's' : ''}`
+      : 'Active user',
+    status: 'add' as const,
+    mutual_friends_count: s.mutual_friends_count,
+  }));
 
   if (isOffline && results.length === 0) {
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <ThemedView className="flex-1">
-          <View style={styles.header}>
-            <Pressable style={styles.headerIcon}>
-              <FontAwesome5 name="arrow-left" size={18} color={colors.text} />
-            </Pressable>
-            <ThemedText className="text-lg font-bold">Find Friends</ThemedText>
-            <View style={styles.headerSpacer} />
-          </View>
-          <NetworkErrorView onRetry={refetchFriends} />
+          <NetworkErrorView onRetry={() => { void refetchFriends(); void refetchSuggestions(); }} />
         </ThemedView>
       </SafeAreaView>
     );
@@ -117,15 +111,14 @@ export function SearchScreen() {
           <View style={styles.list}>
             {(results.length
               ? (results as unknown as SearchUserRow[])
-              : (suggestedFriends.map((f) => ({ ...f, user_id: f.id })) as SearchUserRow[])
+              : suggestedFriends
             ).map((friend) => (
               <View
                 key={friend.user_id ?? friend.id}
                 style={[styles.friendCard, { backgroundColor: colors.surfaceAlt, borderColor: colors.border }]}
               >
                 <View style={styles.friendAvatar}>
-                  <Avatar size={44} name={friend.username ?? friend.id} />
-                  {friend.id === 'alex_tracker' ? <View style={styles.onlineDot} /> : null}
+                  <Avatar size={44} name={friend.username ?? friend.user_id ?? ''} uri={friend.avatar_url ?? undefined} />
                 </View>
                 <View style={styles.friendInfo}>
                   <ThemedText className="text-base font-semibold">
@@ -138,9 +131,7 @@ export function SearchScreen() {
                 <Pressable
                   style={[
                     styles.friendAction,
-                    friend.status === 'add' || results.length
-                      ? { backgroundColor: colors.primary }
-                      : { borderColor: colors.primary, borderWidth: 1 },
+                    { backgroundColor: colors.primary },
                   ]}
                   onPress={() => {
                     const targetUserId = friend.user_id ?? friend.id;
@@ -149,11 +140,9 @@ export function SearchScreen() {
                 >
                   <ThemedText
                     className="text-sm font-semibold"
-                    style={{
-                      color: friend.status === 'add' || results.length ? colors.text : colors.primary,
-                    }}
+                    style={{ color: colors.text }}
                   >
-                    {friend.status === 'add' || results.length ? 'Add' : 'Cancel'}
+                    Add
                   </ThemedText>
                 </Pressable>
               </View>
@@ -260,15 +249,6 @@ const styles = StyleSheet.create({
   },
   friendAvatar: {
     position: 'relative',
-  },
-  onlineDot: {
-    position: 'absolute',
-    right: 2,
-    bottom: 2,
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: '#22C55E',
   },
   friendInfo: {
     flex: 1,

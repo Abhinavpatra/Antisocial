@@ -7,6 +7,7 @@ import { SettingsDrawer } from '@/components/navigation/SettingsDrawer';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { useMe } from '@/hooks/useMe';
+import { useUserStats } from '@/hooks/useUserStats';
 import { useAppTheme } from '@/hooks/useTheme';
 import { useUsage } from '@/hooks/useUsage';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -18,12 +19,18 @@ export function HomeScreen() {
   const { colors } = useAppTheme();
   const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
   const { me } = useMe();
+  const { stats } = useUserStats();
 
   const { formattedTotalTime, totalTime } = useUsage();
 
   // Mock Goal: 6 hours
   const dailyGoal = 6 * 60 * 60 * 1000;
   const progress = Math.min(totalTime / dailyGoal, 1);
+
+  // Live stats from backend
+  const streakDays = stats?.streak_days ?? 0;
+  const currentRank = stats?.current_rank;
+  const rankDisplay = currentRank ? `#${currentRank}` : '--';
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -41,13 +48,13 @@ export function HomeScreen() {
           <View style={[styles.section, styles.statsRow]}>
             <StatCard
               label="Streak"
-              value="12 Days"
+              value={`${streakDays} Day${streakDays !== 1 ? 's' : ''}`}
               icon={<FontAwesome5 name="bolt" size={14} color={colors.primary} />}
               style={styles.statCardLeft}
             />
             <StatCard
               label="Rank"
-              value="#42"
+              value={rankDisplay}
               icon={<FontAwesome5 name="medal" size={14} color={colors.primary} />}
               style={styles.statCardRight}
             />

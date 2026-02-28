@@ -20,33 +20,43 @@ type TrendingCard = {
   image: string;
 };
 
-const trendingCards: TrendingCard[] = [
-  {
-    id: 'instagram-detox',
-    title: 'Instagram Detox',
-    description: 'Complete reset. No posting, no scrolling for a full day.',
-    duration: '24h',
-    reward: '150',
-    image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuD44yUhjNyw51AV0n_NVJqNixuaniXK3e_WoejZCfz2ypou3PtPtL1oyu0wKNKxmAY_Yw9MslDfuxzWl8VD_hmEGkHN7VpjjFAsrCkAN5f0MVtCmHGqnzYT8M-A_IDH62DNkZmxdEXwYucsL_6h91DfHIsibJ-SwmKsNknRoEIHDNklsIgfAfxJAlSRrBIf4U9wiVLjD2CiUZBk3fJD5hfds6su28aMYlkba20nNCXni8aVfEKW5al1wBtxfolypA3p83ZgeISMDFY',
-  },
-  {
-    id: 'deep-work',
-    title: 'Deep Work',
-    description: 'Turn off notifications and focus on a single task.',
-    duration: '4h',
-    reward: '80',
-    image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuDtRcfTxEd3PrmYgmXXWEkH-TlJAk9CejD8EOInW3sABQwOp6YRwAdakz8s13Kb0oRuVpiJWvx0liXYV8HfImhog-b5CPAgsz6VXlYJX3c1u4heHtw6L74nXaO2ooysG05M5oToscIq-sSzU-WbSLHuepoioDxsuRqDjm0fzffV8ntBLvHKBxsJIBEGPuo4__m-iSzkoXjV4Ad-GLvVOLPSsVn-sNQdcT1odvpb5U6i-RxNKK9WhYonrZU_FM1VUWJsxvRA0_-kacA',
-  },
-];
+// Default placeholder images for trending cards
+const DEFAULT_TRENDING_IMAGES: Record<string, string> = {
+  'Instagram Detox':
+    'https://images.unsplash.com/photo-1611262588024-d12430b98920?w=400&h=200&fit=crop',
+  'Deep Work':
+    'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=400&h=200&fit=crop',
+};
+
+function formatDuration(endsAt: string): string {
+  const end = new Date(endsAt);
+  const now = new Date();
+  const diffMs = end.getTime() - now.getTime();
+  if (diffMs <= 0) return 'Ended';
+  const hours = Math.floor(diffMs / (1000 * 60 * 60));
+  if (hours >= 24) {
+    const days = Math.floor(hours / 24);
+    return `${days}d`;
+  }
+  return `${hours}h`;
+}
 
 export function ChallengesScreen() {
   const { colors } = useAppTheme();
   const { me, refetch: refetchMe } = useMe();
-  const { userId, challenges, actions, networkError, refetch, isLoading } = useChallenges();
+  const { userId, challenges, trending, actions, networkError, refetch, isLoading } = useChallenges();
 
   const active = challenges.find((c) => c.status === 'active' && c.my_status === 'joined') ?? null;
+
+  // Convert trending challenges to card format
+  const trendingCards: TrendingCard[] = trending.map((t) => ({
+    id: t.id,
+    title: t.title,
+    description: t.description ?? 'Join this challenge!',
+    duration: t.ends_at ? formatDuration(t.ends_at) : 'Ongoing',
+    reward: String(t.coin_reward),
+    image: DEFAULT_TRENDING_IMAGES[t.title] ?? DEFAULT_TRENDING_IMAGES['Deep Work'],
+  }));
 
   if (networkError && challenges.length === 0 && !isLoading) {
     return (
@@ -89,11 +99,7 @@ export function ChallengesScreen() {
             cards={trendingCards}
             onAdd={async (card) => {
               if (!userId) return;
-              await actions.create({
-                title: card.title,
-                description: card.description,
-                coin_reward: Number(card.reward) || 0,
-              });
+              await actions.join(card.id);
               await refetchMe();
             }}
           />

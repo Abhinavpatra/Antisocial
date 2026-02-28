@@ -74,3 +74,17 @@ export async function completeChallenge(params: { userId: string; challengeId: s
   );
 }
 
+export type TrendingChallenge = ChallengeRow & {
+  recent_joins: number;
+};
+
+export async function getTrendingChallenges(params: { userId: string; limit?: number }) {
+  const qs = new URLSearchParams();
+  if (params.limit) qs.set('limit', String(params.limit));
+  const suffix = qs.toString() ? `?${qs.toString()}` : '';
+  return await apiFetch<{ trending: TrendingChallenge[] }>(
+    `/api/challenges/trending${suffix}`,
+    { userId: params.userId },
+  );
+}
+

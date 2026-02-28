@@ -87,3 +87,18 @@ export async function getLeaderboard(params: {
   });
 }
 
+export type FriendSuggestion = PublicProfile & {
+  mutual_friends_count: number;
+  suggestion_reason: 'mutual_friends' | 'active_user';
+};
+
+export async function getFriendSuggestions(params: { userId: string; limit?: number }) {
+  const qs = new URLSearchParams();
+  if (params.limit) qs.set('limit', String(params.limit));
+  const suffix = qs.toString() ? `?${qs.toString()}` : '';
+  return await apiFetch<{ suggestions: FriendSuggestion[] }>(
+    `/api/friends/suggestions${suffix}`,
+    { userId: params.userId },
+  );
+}
+
