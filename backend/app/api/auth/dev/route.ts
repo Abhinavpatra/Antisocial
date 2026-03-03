@@ -2,12 +2,18 @@ import { randomUUID } from 'crypto';
 import type { NextRequest } from 'next/server';
 import { db } from '@/lib/db';
 import { ApiError, jsonError, jsonOk } from '@/lib/http';
+import { env } from '@/lib/env';
 
 export const runtime = 'nodejs';
 
 // Dev-only helper to mint a user id without Supabase Auth wiring yet.
 // Returns: { userId } — client should send it as `x-user-id` header.
+// IMPORTANT: This endpoint should be disabled in production!
 export async function POST(req: NextRequest) {
+  // Block this endpoint in production
+  if (env.NODE_ENV === 'production') {
+    throw new ApiError(403, 'This endpoint is disabled in production. Please use proper authentication.');
+  }
   try {
     const body = (await req.json().catch(() => null)) as
       | null
